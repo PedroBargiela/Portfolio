@@ -1,5 +1,3 @@
-# Firebase Studio
+# Final Portfolio
 
-This is a NextJS starter in Firebase Studio.
-
-To get started, take a look at src/app/page.tsx.
+Este proyecto es mi portfolio personal creado con Next.js y Tailwind CSS.
