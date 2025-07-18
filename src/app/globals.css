@@ -1,38 +1,32 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  cursor: none;
-}
-
-body *, a, button {
-  cursor: none;
+  font-family: Arial, Helvetica, sans-serif; /* Puedes considerar cambiar la fuente para que se parezca más también */
 }
 
 @layer base {
   :root {
-    --background: 14 22% 12%; /* Dark Slate */
-    --foreground: 210 40% 80%; /* Light Slate */
-    --card: 23 24% 16%; /* Light Navy */
+    --background: 220 20% 10%; /* Lo mantienes como un azul muy oscuro para el fondo */
+    --foreground: 210 5% 45%;   /* Texto principal: gris oscuro (ajustado de light slate) */
+    --card: 23 24% 16%;
     --card-foreground: 210 40% 98%;
     --popover: 23 24% 16%;
     --popover-foreground: 210 40% 98%;
-    --primary: 180 100% 25%; /* Green/Cyan */
-    --primary-foreground: 14 22% 12%;
+    --primary: 180 100% 40%; /* Verde/Cian brillante (ajustado para que sea más vibrante) */
+    --primary-foreground: 14 22% 12%; /* Podría ser un gris oscuro si el primario se usa como fondo */
     --secondary: 40 10% 25%;
     --secondary-foreground: 210 40% 98%;
     --muted: 40 10% 25%;
-    --muted-foreground: 210 40% 60%; /* Slate */
-    --accent: 180 100% 25%;
+    --muted-foreground: 210 5% 65%; /* Texto menos importante: un gris un poco más claro que foreground */
+    --accent: 180 100% 40%; /* Se puede alinear con primary si es similar */
     --accent-foreground: 14 22% 12%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 214.3 31.8% 25.4%;
     --input: 214.3 31.8% 25.4%;
-    --ring: 180 100% 25%;
+    --ring: 180 100% 40%; /* Alineado con primary */
     --chart-1: 180 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
@@ -41,25 +35,27 @@ body *, a, button {
     --radius: 0.5rem;
   }
   .dark {
-    --background: 14 22% 12%; /* Dark Slate */
-    --foreground: 210 40% 80%; /* Light Slate */
-    --card: 23 24% 16%; /* Light Navy */
+    /* Mantenemos estos igual que :root si tu tema oscuro y claro comparten los mismos colores base de texto y primario.
+       Si quieres que el modo oscuro tenga tonos ligeramente diferentes, ajusta aquí. */
+    --background: 220 20% 10%;
+    --foreground: 210 5% 45%;
+    --card: 23 24% 16%;
     --card-foreground: 210 40% 98%;
     --popover: 23 24% 16%;
     --popover-foreground: 210 40% 98%;
-    --primary: 180 100% 25%; /* Green/Cyan */
+    --primary: 180 100% 40%;
     --primary-foreground: 14 22% 12%;
     --secondary: 40 10% 25%;
     --secondary-foreground: 210 40% 98%;
     --muted: 40 10% 25%;
-    --muted-foreground: 210 40% 60%; /* Slate */
-    --accent: 180 100% 25%;
+    --muted-foreground: 210 5% 65%;
+    --accent: 180 100% 40%;
     --accent-foreground: 14 22% 12%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 214.3 31.8% 25.4%;
     --input: 214.3 31.8% 25.4%;
-    --ring: 180 100% 25%;
+    --ring: 180 100% 40%;
     --chart-1: 180 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -76,7 +72,7 @@ body *, a, button {
     @apply scroll-smooth;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground; /* Aquí se aplica el color de texto principal */
   }
   ::selection {
     background-color: hsl(var(--primary) / 0.2);
@@ -99,4 +95,20 @@ body *, a, button {
   }
 }
 
-    
+@layer components {
+  /* Efecto de texto iluminado similar al de Brittany Chiang */
+  .highlighted-text {
+    transition: color 0.3s ease-out, text-shadow 0.3s ease-out; /* Transición suave */
+    /* Cambiamos a --primary para el texto resaltado, como en Brittany Chiang */
+    color: hsl(var(--primary));
+    /* Ajustamos la sombra para que sea más sutil y del mismo color que el resaltado */
+    text-shadow: 0 0 8px hsl(var(--primary) / 0.3); /* Un poco más de blur, menos opacidad */
+  }
+
+  /* Asegúrate de que el color base del texto sea el que quieres */
+  /* Si ya tienes body @apply text-foreground, esta regla de transición es más importante para cuando el texto *deja* de estar resaltado */
+  body .text-foreground,
+  h1, h2, h3, h4, h5, h6, p, li, span { /* Añadimos las etiquetas de texto para asegurar la transición */
+     transition: color 0.3s ease-out, text-shadow 0.3s ease-out;
+  }
+}
