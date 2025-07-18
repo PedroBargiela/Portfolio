@@ -1,22 +1,50 @@
+// src/app/layout.tsx
+"use client";
 
-import type { Metadata } from 'next';
+import { useState, useEffect } from 'react';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import { LeftSocialBar, RightEmailBar } from '@/components/layout/side-bars';
 import { CustomCursor } from '@/components/ui/custom-cursor';
+import { LauncherPage } from '@/components/homepage/LauncherPage'; // Ruta de importación
 
-export const metadata: Metadata = {
-  title: 'Pedro Bargiela | Software Developer',
-  description: 'A dynamic and personal portfolio for Pedro Bargiela, Software Developer.',
-};
+// La metadata sigue sin ir aquí
+// export const metadata: Metadata = { ... };
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [showLauncher, setShowLauncher] = useState(true);
+  // Nuevo estado para controlar la visibilidad del CustomCursor
+  const [showCustomCursor, setShowCustomCursor] = useState(false); // Inicialmente oculto en la lanzadera
+
+  useEffect(() => {
+    if (showLauncher) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+  }, [showLauncher]);
+
+  const handleEnterPortfolio = () => {
+    setShowLauncher(false);
+    // Cuando entramos al portfolio, mostramos el CustomCursor
+    setShowCustomCursor(true);
+  };
+
+  // Función para que LauncherPage notifique su estado de actividad
+  const handleLauncherActive = (isActive: boolean) => {
+    // Si la lanzadera está activa, ocultamos el CustomCursor
+    // Si la lanzadera está saliendo (no activa), esperamos a que handleEnterPortfolio lo muestre
+    if (isActive) {
+      setShowCustomCursor(false);
+    }
+  };
+
   return (
     <html lang="en" className="dark">
       <head>
@@ -28,18 +56,28 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased bg-background text-foreground">
-        <CustomCursor />
-        <div className="flex min-h-screen flex-col">
-          <Header />
-          <LeftSocialBar />
-          <RightEmailBar />
-          <main className="flex-grow">{children}</main>
-          <Footer />
-        </div>
+        {/* Renderiza CustomCursor solo si showCustomCursor es true */}
+        {showCustomCursor && <CustomCursor />}
+
+        {showLauncher && (
+          <LauncherPage
+            onEnterPortfolio={handleEnterPortfolio}
+            onLauncherActive={handleLauncherActive} // Pasamos la nueva prop
+          />
+        )}
+
+        {!showLauncher && (
+          <div className="flex min-h-screen flex-col">
+            <Header />
+            <LeftSocialBar />
+            <RightEmailBar />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+          </div>
+        )}
+
         <Toaster />
       </body>
     </html>
   );
 }
-
-    
