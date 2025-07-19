@@ -109,6 +109,55 @@ body {
   /* Si ya tienes body @apply text-foreground, esta regla de transición es más importante para cuando el texto *deja* de estar resaltado */
   body .text-foreground,
   h1, h2, h3, h4, h5, h6, p, li, span { /* Añadimos las etiquetas de texto para asegurar la transición */
-     transition: color 0.3s ease-out, text-shadow 0.3s ease-out;
+      transition: color 0.3s ease-out, text-shadow 0.3s ease-out;
   }
+}
+
+@keyframes float-y {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px); /* Adjusted for smaller, subtle float */
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes float-y-large {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes rotate-slow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.animate-float {
+  animation: float-y 3s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-y 5s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float-y 2s ease-in-out infinite;
+}
+
+.animate-float-large {
+  animation: float-y-large 4s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+    animation: rotate-slow 60s linear infinite;
 }
