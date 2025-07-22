@@ -18,7 +18,7 @@ export interface Experience {
   title: string;
   company: string;
   startDate: string;
-  endDate: string | null;
+  endDate: string;
   type: string;
   description: string[];
   order: number;
@@ -29,7 +29,7 @@ export interface Education {
   degree: string;
   institution: string;
   startDate: string | null;
-  endDate: string | null;
+  endDate: string;
   current: boolean;
   description: string[];
 }
@@ -53,9 +53,9 @@ export interface Project {
   longDescription: string;
   technologies: string[];
   images: string[];
-  videoURL?: string;
-  githubRepo?: string;
-  liveDemo?: string;
+  videoURL: string;
+  githubRepo: string;
+  liveDemo: string;
   featured: boolean;
 }
 

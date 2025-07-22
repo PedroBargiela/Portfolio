@@ -3,8 +3,8 @@ import type { Profile, Experience, Education, SkillCategory, Project, Language }
 
 const profile: Profile = {
     name: "Pedro Bargiela",
-    title: "Construyo cosas para la web",
-    shortDescription: "Soy un desarrollador de software con sede en Galicia, España, especializado en la creación de experiencias web excepcionales. Actualmente, estoy centrado en ampliar mi perfil técnico hacia la Inteligencia Artificial y la Ciencia de Datos.",
+    title: "Desarrollador Full Stack | Machine Learning, Data Science & IA",
+    shortDescription: "Construyo la aplicación, luego la hago inteligente. Desarrollo full-stack con un cerebro de IA.",
     aboutMe: "¡Hola! Mi nombre es Pedro y disfruto creando cosas que viven en internet. Mi interés por el desarrollo web comenzó en 2022 cuando decidí probar a editar temas personalizados de WordPress, ¡lo que me enseñó mucho sobre HTML y CSS!. Estoy en constante formación y en búsqueda de un puesto a largo plazo. Tengo muchas ganas de trabajar y disfruto de aprender nuevas tecnologías y métodos de trabajo, por lo que si fuese necesario me formaré en aquello que se precise y buscaré la forma de hacerlo lo mejor posible. Si confías en mi obtendrás a cambio trabajo duro para estar a la altura de las expectativas.",
     contact: {
         phone: "+34 697972968",
