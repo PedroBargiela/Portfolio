@@ -13,26 +13,24 @@ export interface Profile {
   profileImageURL: string;
 }
 
-export interface Experience {
+export type Experience = {
   id: string;
   title: string;
   company: string;
+  companyUrl?: string;
   startDate: string;
-  endDate: string;
-  type: string;
-  description: string[];
-  order: number;
-}
+  endDate?: string;
+  description: string;
+  technologies: string[];
+};
 
-export interface Education {
+export type Education = {
   id: string;
   degree: string;
   institution: string;
-  startDate: string | null;
-  endDate: string;
-  current: boolean;
-  description: string[];
-}
+  endDate?: string;
+  skills: string[];
+};
 
 export interface Skill {
   name: string;
@@ -40,11 +38,11 @@ export interface Skill {
   icon?: string;
 }
 
-export interface SkillCategory {
+export type SkillCategory = {
   id: string;
   category: string;
-  items: Skill[];
-}
+  items: { name: string }[];
+};
 
 export interface Project {
   id: string;

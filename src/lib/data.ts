@@ -5,7 +5,27 @@ const profile: Profile = {
     name: "Pedro Bargiela",
     title: "Desarrollador Full Stack | Machine Learning, Data Science & IA",
     shortDescription: "Construyo la aplicación, luego la hago inteligente. Desarrollo full-stack con un cerebro de IA.",
-    aboutMe: "¡Hola! Mi nombre es Pedro y disfruto creando cosas que viven en internet. Mi interés por el desarrollo web comenzó en 2022 cuando decidí probar a editar temas personalizados de WordPress, ¡lo que me enseñó mucho sobre HTML y CSS!. Estoy en constante formación y en búsqueda de un puesto a largo plazo. Tengo muchas ganas de trabajar y disfruto de aprender nuevas tecnologías y métodos de trabajo, por lo que si fuese necesario me formaré en aquello que se precise y buscaré la forma de hacerlo lo mejor posible. Si confías en mi obtendrás a cambio trabajo duro para estar a la altura de las expectativas.",
+    aboutMe: [
+        {
+            part1: "Construyo el presente y el futuro del software. Mi experiencia como ",
+            bold1: "desarrollador Full Stack",
+            part2: " es el punto de partida para crear aplicaciones completas hoy, mientras que mi profunda inmersión en ",
+            bold2: "Inteligencia Artificial, Machine Learning y Data Science",
+            part3: " son mis herramientas para diseñar las soluciones predictivas e interactivas del mañana."
+        },
+        {
+            part1: "A lo largo de mi experiencia he construido la arquitectura completa de diversas aplicaciones web, pero es en el back-end, donde la lógica y los datos convergen, donde más disfruto. Esta fascinación me ha impulsado a ampliar mi perfil técnico y formarme activamente en ",
+            bold1: "Inteligencia Artificial y Ciencia de Datos",
+            part2: ". Mi objetivo es claro: utilizar el ",
+            bold2: "Machine Learning y el análisis de datos",
+            part3: " para construir la próxima generación de aplicaciones; software que no solo sea robusto, sino verdaderamente inteligente."
+        },
+        {
+            part1: "Me considero una persona en ",
+            bold1: "constante formación, motivada por los desafíos complejos",
+            part2: " y la oportunidad de aprender nuevas tecnologías. Mi foco ahora está en afrontar los retos del universo de la IA: quiero utilizar el poder predictivo de los datos para ir más allá de la funcionalidad tradicional y construir soluciones que no solo respondan, sino que se anticipen a las necesidades del futuro."
+        }
+    ],
     contact: {
         phone: "+34 697972968",
         email: "pedrobargiela@gmail.com",
@@ -16,123 +36,114 @@ const profile: Profile = {
     profileImageURL: "https://placehold.co/450x450.png"
 };
 
-const experience: Experience[] = [
+export const experience: Experience[] = [
     {
-        id: "pontececa",
-        title: "Programador Full Stack",
-        company: "PONTECERCA",
-        startDate: "Abril 2024",
-        endDate: "Presente",
-        type: "Beca FEUGA",
-        description: [
-            "Desarrollo y Mantenimiento en WordPress y PrestaShop.",
-            "Desarrollo a medida de componentes en Wordpress y Prestashop.",
-            "Trabajo diario con PHP (CodeIgniter), JavaScript (jQuery, React) y CSS (Tailwind).",
-            "Maquetación avanzada con Divi, Elementor y Gutenberg.",
-            "Implementación de estrategias SEO y SEM para mejorar la visibilidad y el rendimiento.",
-        ],
-        order: 1
+        id: 'exp1',
+        title: 'Programador Full Stack',
+        company: 'PONTECERCA',
+        companyUrl: 'https://www.pontecerca.es/',
+        startDate: 'ABR 2024',
+        endDate: 'MAY 2025',
+        description: 'Desarrollador Full Stack responsable del ciclo de vida completo de proyectos e-commerce y corporativos sobre WordPress y PrestaShop. Mi labor principal incluyó el desarrollo a medida de componentes para extender funcionalidades , aplicando un alto nivel de PHP (CodeIgniter), JavaScript y CSS , y la gestión de bases de datos MySQL. Adicionalmente, realicé tareas de maquetación avanzada con Divi, Elementor y Gutenberg , y optimización para buscadores (SEO/SEM).',
+        technologies: ['PHP', 'CodeIgniter', 'JavaScript', 'CSS', 'WordPress', 'PrestaShop', 'MySQL']
     },
     {
-        id: "innovacion-agil",
-        title: "Desarrollador Frontend",
-        company: "INNOVACIÓN ÁGIL",
-        startDate: "Marzo 2024",
-        endDate: "Abril 2024",
-        type: "Beca FEUGA",
-        description: ["Desarrollo con WordPress.", "Maquetación con Elementor.", "SEO-SEM.", "Diseño Web.", "Programación con PHP.", "Bases de datos MySQL."],
-        order: 2
+        id: 'exp2',
+        title: 'Desarrollador Frontend',
+        company: 'INNOVACIÓN ÁGIL',
+        companyUrl: 'https://innovacionagil.com/', 
+        startDate: 'MAR 2024',
+        endDate: 'ABR 2024',
+        description: 'Como desarrollador frontend, mi labor se enfocó en el desarrollo, diseño y mantenimiento de sitios web sobre WordPress , utilizando Elementor para la maquetación de interfaces dinámicas y funcionales. Además, apliqué estrategias de SEO y SEM para mejorar el posicionamiento y el alcance digital de los proyectos.',
+        technologies: ['WordPress', 'Elementor', 'PHP', 'MySQL', 'SEO/SEM']
     },
     {
-        id: "tecsite",
-        title: "Frontend Developer",
-        company: "TECONSITE SL",
-        startDate: "Septiembre 2023",
-        endDate: "Febrero 2024",
-        type: "Prácticas curriculares",
-        description: ["Maquetación web con HTML, CSS y JavaScript.", "WordPress y PrestaShop.", "Programación con JavaScript.", "Programación con PHP en CodeIgniter.", "Bases de datos MySQL."],
-        order: 3
+        id: 'exp3',
+        title: 'Frontend Developer',
+        company: 'TECONSITE SL',
+        companyUrl: 'https://www.teconsite.es/',
+        startDate: 'SEP 2023',
+        endDate: 'FEB 2024',
+        description: 'En este puesto, me especialicé en la maquetación de interfaces web responsive con HTML, CSS y JavaScript. Apliqué mis conocimientos en el desarrollo con PHP sobre el framework CodeIgniter y trabajé en la implementación de proyectos sobre los CMS WordPress y PrestaShop.',
+        technologies: ['HTML', 'CSS', 'JavaScript', 'PHP', 'CodeIgniter', 'WordPress']
     }
 ];
 
-const education: Education[] = [
+export const education: Education[] = [
     {
-        id: "unir",
-        degree: "Programa Profesional en IA y Data Science",
-        institution: "UNIR",
-        startDate: "2024",
-        endDate: null,
-        current: true,
-        description: ["Machine Learning", "Python", "Ciencia de datos"]
+        id: 'edu1',
+        degree: 'Programa Profesional en Inteligencia Artificial y Data Science',
+        institution: 'UNIR',
+        endDate: 'actualidad',
+        skills: ['Machine Learning', 'Python', 'Ciencia de datos']
     },
     {
-        id: "universae",
-        degree: "Ciclo Superior de Desarrollo de Aplicaciones Web",
-        institution: "UNIVERSAE",
-        startDate: "2022",
-        endDate: "2024",
-        current: false,
-        description: []
+        id: 'edu2',
+        degree: 'Ciclo Superior de Desarrollo de Aplicaciones Web',
+        institution: 'UNIVERSAE',
+        endDate: '2022-2024',
+        skills: ['PHP', 'JavaScript', 'HTML', 'CSS', 'SQL', 'React', 'CodeIgniter']
     }
 ];
 
-const skills: SkillCategory[] = [
+export const skills: SkillCategory[] = [
     {
-        id: "frontend",
-        category: "Frontend",
+        id: 'skills1',
+        category: 'Frontend',
         items: [
-            { name: "HTML", level: "Alto" },
-            { name: "CSS", level: "Alto" },
-            { name: "JavaScript", level: "Alto" },
-            { name: "TypeScript", level: "Medio" },
-            { name: "React", level: "Alto" },
-            { name: "Next.js", level: "Alto" },
-            { name: "JQuery", level: "Medio" },
-            { name: "Tailwind CSS", level: "Alto" },
+            { name: 'JavaScript' },
+            { name: 'React' },
+            { name: 'HTML' },
+            { name: 'CSS' },
+            { name: 'JQuery' },
+            { name: 'Elementor' },
+            { name: 'Divi' },
         ]
     },
     {
-        id: "backend",
-        category: "Backend",
+        id: 'skills2',
+        category: 'Backend',
         items: [
-            { name: "PHP", level: "Alto" },
-            { name: "CodeIgniter", level: "Alto" },
-            { name: "Node.js", level: "Básico" },
+            { name: 'PHP' },
+            { name: 'CodeIgniter' },
+            { name: 'Python' },
+            { name: 'MySQL' },
+            { name: 'MariaDB' },
+            { name: 'SQL' },
         ]
     },
     {
-        id: "databases",
-        category: "Bases de Datos",
+        id: 'skills3',
+        category: 'Inteligencia Artificial y Data Science',
         items: [
-            { name: "MySQL", level: "Alto" },
-            { name: "PostgreSQL", level: "Básico" },
+            { name: 'Machine Learning' },
+            { name: 'Ciencia de datos' },
+            { name: 'Python' },
+            { name: 'Pandas' },
+            { name: 'TensorFlow' },
+            { name: 'Scikit-learn' },
+            { name: 'NumPy' },
         ]
     },
     {
-        id: "ai",
-        category: "IA & Data Science",
+        id: 'skills4',
+        category: 'CMS',
         items: [
-            { name: "Python", level: "Medio" },
-            { name: "Scikit-learn", level: "Básico" },
-            { name: "Pandas", level: "Básico" },
+            { name: 'WordPress' },
+            { name: 'PrestaShop' },
         ]
     },
     {
-        id: "cms",
-        category: "CMS",
+        id: 'skills5',
+        category: 'Herramientas y Otros',
         items: [
-            { name: "WordPress", level: "Alto" },
-            { name: "PrestaShop", level: "Alto" },
-        ]
-    },
-     {
-        id: "tools",
-        category: "Herramientas y Otros",
-        items: [
-            { name: "Git", level: "Alto" },
-            { name: "GitHub", level: "Alto" },
-            { name: "Docker", level: "Básico" },
-            { name: "Figma", level: "Medio" },
+            { name: 'Git' },
+            { name: 'GitHub' },
+            { name: 'SEO' },
+            { name: 'SEM' },
+            { name: 'Figma' },
+            { name: 'Adobe XD' },
+            { name: 'Paquete Office' },
         ]
     }
 ];

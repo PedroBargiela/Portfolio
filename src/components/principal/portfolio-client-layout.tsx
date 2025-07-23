@@ -5,19 +5,59 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Briefcase, GraduationCap, Mail, Send } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Briefcase, GraduationCap, Mail, Send, Github, Instagram, Linkedin } from 'lucide-react';
 import { AnimatedSection } from '@/components/ui/animated-section';
 import { TechIcon } from '@/components/tech-icon';
-import { Github, Instagram, Linkedin } from 'lucide-react';
 import { SiGoodreads, SiLetterboxd, SiSpotify } from 'react-icons/si';
-import { StarIcon } from '@/components/ui/star-icon';
+import { SendButton } from '@/components/ui/send-button';
+import { ExperienceTabs } from '@/components/ui/experience-tabs';
 
+
+type FormattedParagraph = {
+    part1: string;
+    bold1: string;
+    part2?: string;
+    bold2?: string;
+    part3?: string;
+};
 // Definición de tipos de datos (ajusta según tu archivo /lib/data.ts)
-type Profile = { name: string; title: string; shortDescription: string; aboutMe: string; profileImageURL: string; contact: { email: string } };
-type Project = { id: string; name: string; featured: boolean; images: string[]; liveDemo: string; githubRepo: string; longDescription: string; technologies: string[] };
-type Experience = { id: string; title: string; company: string; startDate: string; endDate: string; description: string[] };
-type Education = { id: string; degree: string; institution: string; endDate: string };
-type SkillCategory = { id: string; category: string; items: { name: string }[] };
+type Profile = { 
+    name: string; 
+    title: string; 
+    shortDescription: string; 
+    aboutMe: (string | FormattedParagraph)[]; 
+    profileImageURL: string; 
+    contact: { email: string } 
+};
+type Project = { 
+    id: string; 
+    name: string; 
+    featured: boolean; 
+    images: string[]; 
+    liveDemo: string; 
+    githubRepo: string; 
+    longDescription: string; 
+    technologies: string[] 
+};
+type Experience = { 
+    id: string; 
+    title: string; 
+    company: string; 
+    startDate: string; 
+    endDate: string; 
+    description: string[] 
+};
+type Education = { 
+    id: string; 
+    degree: string; 
+    institution: string; 
+    endDate: string 
+};
+type SkillCategory = { 
+    id: string; 
+    category: string; 
+    items: { name: string }[] 
+};
 
 interface PortfolioClientLayoutProps {
     profile: Profile;
@@ -34,6 +74,63 @@ const navLinks = [
     { href: '#skills', label: 'Conocimientos' },
     { href: '#projects', label: 'Proyectos' },
 ];
+
+const getTechColor = (techName: string) => {
+    const lowerCaseName = techName.toLowerCase();
+    
+    // Este switch actúa como un diccionario de colores
+    switch (lowerCaseName) {
+      // Frontend
+        case 'javascript':
+            return 'bg-yellow-400/20 hover:bg-yellow-400/30 text-yellow-300';
+        case 'react':
+            return 'bg-sky-500/20 hover:bg-sky-500/30 text-sky-400';
+        case 'html':
+            return 'bg-orange-600/20 hover:bg-orange-600/30 text-orange-400';
+        case 'css':
+            return 'bg-blue-600/20 hover:bg-blue-600/30 text-blue-400';
+        case 'jquery':
+            return 'bg-blue-800/20 hover:bg-blue-800/30 text-blue-300';
+    
+        // Backend
+        case 'php':
+            return 'bg-indigo-400/20 hover:bg-indigo-400/30 text-indigo-300';
+        case 'codeigniter':
+            return 'bg-red-600/20 hover:bg-red-600/30 text-red-400';
+        case 'python':
+            return 'bg-blue-400/20 hover:bg-blue-400/30 text-blue-300';
+        
+        // IA & Data Science
+        case 'machine learning':
+        case 'ciencia de datos':
+            return 'bg-purple-500/20 hover:bg-purple-500/30 text-purple-400';
+        case 'pandas':
+            return 'bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-400';
+        case 'tensorflow':
+            return 'bg-orange-500/20 hover:bg-orange-500/30 text-orange-400';
+        case 'scikit-learn':
+            return 'bg-orange-400/20 hover:bg-orange-400/30 text-orange-300';
+        case 'numpy':
+            return 'bg-sky-400/20 hover:bg-sky-400/30 text-sky-300';
+            
+        // CMS
+        case 'wordpress':
+            return 'bg-blue-500/20 hover:bg-blue-500/30 text-blue-400';
+        case 'prestashop':
+            return 'bg-pink-500/20 hover:bg-pink-500/30 text-pink-400';
+    
+        // Herramientas y Otros
+        case 'git':
+        case 'github':
+            return 'bg-gray-800/80 hover:bg-gray-700/80 text-gray-300';
+        case 'figma':
+            return 'bg-pink-600/20 hover:bg-pink-600/30 text-pink-400';
+        
+        // Color por defecto si no encuentra coincidencia
+        default:
+            return 'bg-card/50 hover:bg-card text-slate-300';
+    }
+};
 
 export function PortfolioClientLayout({
     profile,
@@ -80,7 +177,7 @@ export function PortfolioClientLayout({
 
     return (
         <div className="container mx-auto max-w-7xl">
-        <div className="lg:grid lg:grid-cols-2 lg:gap-16">
+        <div className="lg:grid lg:grid-cols-2">
             
             {/* ================================== */}
             {/* ==      COLUMNA IZQUIERDA (FIJA)      == */}
@@ -123,19 +220,11 @@ export function PortfolioClientLayout({
                 </nav>
             </div>
 
-            <div className="mt-12">
-                <a href="mailto:pedrobargiela@gmail.com" className='button-contact'>
-                    Contáctame
-                    <StarIcon className="star-1" />
-                    <StarIcon className="star-2" />
-                    <StarIcon className="star-3" />
-                    <StarIcon className="star-4" />
-                    <StarIcon className="star-5" />
-                    <StarIcon className="star-6" />
-                </a>
+            <div className="mt-10 flex justify-start">
+            <SendButton />
             </div>
             
-            <div className="mt-8 flex items-center gap-4 text-slate-400">
+            <div className="mt-5 flex items-center gap-4 text-slate-400">
                 <ul className="mt-8 flex items-center" aria-label="Social media">
                     <li className="mr-5">
                         <a href="https://github.com/PedroBargiela" target="_blank" rel="noreferrer noopener" aria-label="GitHub" className="block text-slate-400 hover:text-slate-200 transition-all duration-300 hover:-translate-y-1">
@@ -190,8 +279,21 @@ export function PortfolioClientLayout({
                 </h2>
                 <div>
                     <div className="space-y-4 text-slate-400">
-                    <p>{profile.aboutMe.split('. ')[0]}.</p>
-                    <p>{profile.aboutMe.split('. ').slice(1).join('. ')}</p>
+                        {profile.aboutMe.map((paragraph, index) => (
+                            <p key={index}>
+                                {typeof paragraph === 'string' ? (
+                                    paragraph
+                                ) : (
+                                    <>
+                                        {paragraph.part1}
+                                        <strong className="text-slate-200">{paragraph.bold1}</strong>
+                                        {paragraph.part2}
+                                        {paragraph.bold2 && <strong className="text-slate-200">{paragraph.bold2}</strong>}
+                                        {paragraph.part3 && paragraph.part3}
+                                    </>
+                                )}
+                            </p>
+                        ))}
                     </div>
                 </div>
                 </section>
@@ -204,30 +306,50 @@ export function PortfolioClientLayout({
                     <span className="mr-2 font-mono text-2xl font-normal text-primary">02.</span>
                     Experiencia
                 </h2>
-                <div className="relative space-y-12 before:absolute before:left-2.5 before:top-2.5 before:h-full before:w-0.5 before:bg-border md:before:left-[calc(50%-1px)]">
-                    {experience.map((item, index) => (
-                    <div key={item.id} className="relative flex items-start gap-6 md:gap-8">
-                        <div className="relative z-10 flex h-6 w-6 items-center justify-center rounded-full bg-card ring-4 ring-background ring-offset-0 md:absolute md:left-1/2 md:top-1.5 md:-translate-x-1/2">
-                            <Briefcase className="h-3 w-3 text-primary" />
-                        </div>
-                        <div className={cn('w-full space-y-2 rounded-lg bg-card/50 p-6 shadow-lg transition-all hover:scale-[1.02] hover:bg-card',
-                            'md:w-[calc(50%-2rem)]', 
-                            index % 2 === 0 ? 'md:text-left' : 'md:ml-[calc(50%+2rem)] md:text-left')}>
-                            <h3 className="text-xl font-medium text-slate-200">
-                                {item.title} <span className="text-primary">@ {item.company}</span>
-                            </h3>
-                            <p className="font-mono text-sm text-slate-400">{item.startDate} - {item.endDate || 'Presente'}</p>
-                            <ul className="mt-4 list-none space-y-2 pl-0">
-                                {item.description.map((desc, i) => (
-                                <li key={i} className="flex items-start">
-                                    <span className="mr-3 pt-1 text-primary">▹</span> 
-                                    <span className="text-slate-400">{desc}</span>
-                                </li>
+                <ul className="group/list space-y-8">
+                    {experience.map((item) => (
+                        <li key={item.id}>
+                            <a 
+                            href={item.companyUrl || '#'}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group relative grid grid-cols-8 gap-4 transition-all duration-300 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"
+                            >                           
+                            <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md bg-primary/10 opacity-0 transition-all duration-300 motion-reduce:transition-none lg:block lg:group-hover:opacity-100 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+                            <header className="z-10 mb-2 mt-1 font-mono text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">
+                                {item.startDate} — {item.endDate || 'Presente'}
+                            </header>
+                            <div className="z-10 sm:col-span-6">
+                                <h3 className="inline-flex items-baseline text-xl font-medium text-slate-200 group-hover:text-primary transition-colors duration-300">
+                                <span>{item.title} ・ {item.company}</span>
+                                <ArrowUpRight className="ml-2 h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                                </h3>
+                                <ul className="mt-2 list-none space-y-2 pl-0">
+                                    {item.description}
+                                </ul>
+                                <div className="mt-3 flex flex-wrap gap-2">
+                                {item.technologies.map(tech => (
+                                    <span key={tech} className="rounded-full bg-primary/10 px-3 py-1 font-mono text-sm text-primary">
+                                    {tech}
+                                    </span>
                                 ))}
-                            </ul>
-                        </div>
-                    </div>
-                    ))}
+                                </div>
+                            </div>
+                            </a>
+                        </li>
+                        ))}
+                </ul>
+                <div className="mt-12">
+                    <a 
+                    href="/Pedro Bargiela - CV.pdf" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="group inline-flex items-center font-semibold leading-tight text-slate-200 transition-colors duration-300 hover:text-primary"
+                    aria-label="Ver currículum completo (se abre en una nueva pestaña)"
+                    >
+                        <span>Ver CV Completo</span>
+                        <ArrowUpRight className="ml-2 h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    </a>
                 </div>
                 </section>
             </AnimatedSection>
@@ -245,33 +367,68 @@ export function PortfolioClientLayout({
                             <h3 className="mb-6 flex items-center gap-3 font-headline text-xl font-semibold text-slate-300">
                                 <GraduationCap className="h-6 w-6 text-primary" /> Formación Académica
                             </h3>
-                            <div className="space-y-6">
+                            
+                            {/* El contenedor principal de la lista, nombrado 'list' para el group-hover. */}
+                            <ul className="group/list space-y-8">
                                 {education.map(item => (
-                                <div key={item.id} className="rounded-lg bg-card/50 p-4 transition-colors hover:bg-card">
-                                    <div className="flex justify-between">
-                                        <h4 className="font-semibold text-slate-200">{item.degree}</h4>
-                                        <p className="font-mono text-sm text-slate-400">{item.endDate || 'Cursando'}</p>
+                                <li key={item.id}>
+                                    {/* 1. Eliminamos el grid y las columnas. Ahora es un bloque simple. */}
+                                    <div className="group relative transition-all lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                                        
+                                        {/* El fondo del hover sigue funcionando igual */}
+                                        <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition-all duration-300 motion-reduce:transition-none lg:block lg:group-hover:bg-primary/10 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+                                        
+                                        {/* Contenido principal en una sola columna */}
+                                        <div className="relative z-10">
+                                            <h3 className="text-xl font-medium text-slate-200 group-hover:text-primary transition-colors duration-300">
+                                                {item.degree}
+                                            </h3>
+                                
+                                            {/* 2. Usamos flexbox para poner la institución a la izquierda y la fecha a la derecha */}
+                                            <div className="mt-1 flex justify-between items-baseline">
+                                                <p className="text-slate-400">{item.institution}</p>
+                                                <p className="font-mono text-sm text-slate-400">{item.endDate || 'Cursando'}</p>
+                                            </div>
+                                            
+                                            <div className="mt-3 flex flex-wrap gap-2">
+                                                {item.skills.map(skill => (
+                                                    <span key={skill} className="rounded-full bg-primary/10 px-3 py-1 font-mono text-sm text-primary">
+                                                        {skill}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <p className="text-sm text-slate-400">{item.institution}</p>
-                                </div>
+                                </li>
                                 ))}
-                            </div>
+                            </ul>
                         </div>
-
-                        <div className="space-y-8">
-                            {skills.map(category => (
-                            <div key={category.id}>
-                                <h3 className="mb-4 font-headline text-xl font-semibold text-slate-300">{category.category}</h3>
-                                <div className="flex flex-wrap gap-4">
-                                {category.items.map(skill => (
-                                    <div key={skill.name} className="flex items-center gap-3 rounded-md bg-card/50 px-4 py-2 transition-colors hover:bg-card">
-                                        <TechIcon name={skill.name} className="h-6 w-6" />
-                                        <span className="font-mono text-sm text-slate-300">{skill.name}</span>
+                        {/* --- SECCIÓN DE CONOCIMIENTOS --- */}
+                        {/* ▼▼ ESTE ES EL BLOQUE QUE HEMOS AÑADIDO ▼▼ */}
+                        <div>
+                            <h3 className="mb-6 flex items-center gap-3 font-headline text-xl font-semibold text-slate-300">
+                                {/* Puedes añadir un icono si quieres, ej: <Code className="h-6 w-6 text-primary" /> */}
+                                Conocimientos Técnicos
+                            </h3>
+                            <div className="space-y-8">
+                                {skills.map(category => (
+                                <div key={category.id}>
+                                    <h4 className="mb-4 font-headline text-lg font-semibold text-slate-300">{category.category}</h4>
+                                    <div className="flex flex-wrap gap-4">
+                                    {category.items.map(skill => (
+                                        <div key={skill.name} className={cn(
+                                            "flex items-center gap-3 rounded-md px-4 py-2 transition-colors",
+                                            getTechColor(skill.name) // <-- Aquí llamamos a la función
+                                            )}>
+                                            {/* El TechIcon ahora también puede usar el color */}
+                                            <TechIcon name={skill.name} className={cn("h-6 w-6", getTechColor(skill.name))} />
+                                            <span className="font-mono text-sm text-slate-300">{skill.name}</span>
+                                        </div>
+                                    ))}
                                     </div>
-                                ))}
                                 </div>
+                                ))}
                             </div>
-                            ))}
                         </div>
                     </div>
                 </section>
