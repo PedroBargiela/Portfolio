@@ -75,7 +75,7 @@ export const education: Education[] = [
         degree: 'Programa Profesional en Inteligencia Artificial y Data Science',
         institution: 'UNIR',
         endDate: 'actualidad',
-        skills: ['Machine Learning', 'Python', 'Ciencia de datos']
+        skills: ['Machine Learning', 'Python', 'Data Science']
     },
     {
         id: 'edu2',
@@ -119,7 +119,7 @@ export const skills: SkillCategory[] = [
         category: 'Inteligencia Artificial y Data Science',
         items: [
             { name: 'Machine Learning' },
-            { name: 'Ciencia de datos' },
+            { name: 'Ciencia de Datos' },
             { name: 'Python' },
             { name: 'Pandas' },
             { name: 'TensorFlow' },
@@ -154,21 +154,31 @@ export const skills: SkillCategory[] = [
 
 export const projects: Project[] = [
     {
+        id: 'proj_portfolio',
+        name: 'Portfolio Personal',
+        featured: true,
+        images: ['/images/projects/portfolio.png'],
+        longDescription: 'Mi portfolio personal, diseñado para mostrar mis habilidades. Construido desde cero con un enfoque en un diseño limpio y una experiencia de usuario fluida. Incluye una página de bienvenida animada, un layout asimétrico y efectos de foco interactivos.',
+        technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
+        liveDemo: '#', // Cambia esto por la URL cuando lo despliegues
+        githubRepo: 'https://github.com/PedroBargiela/tu-repositorio' // Cambia esto por la URL de tu repo
+    },
+    {
         id: 'proj1',
         name: 'Conservas Areoso',
         featured: true,
         images: ['/images/projects/areoso.png'],
-        longDescription: 'Tienda online desarrollada en WordPress para una conservera gourmet. Mi trabajo incluyó la creación completa de la web a partir de un diseño , la configuración de módulos de pago y envío, y la optimización del rendimiento para una experiencia de compra fluida.',
-        technologies: ['PrestaShop', 'PHP', 'MySQL', 'JavaScript', 'CSS'],
+        longDescription: 'Tienda online desarrollada en WordPress para una conservera gourmet. Mi trabajo incluyó la creación completa de la web a partir de un diseño, la configuración de módulos de pago y envío, y la optimización del rendimiento y Analytics. Hecha en Pontecerca',
+        technologies: ['WordPress', 'PHP', 'MySQL', 'JavaScript', 'CSS'],
         liveDemo: 'https://www.conservasareoso.es/',
-        githubRepo: '' // Deja en blanco si es privado
+        githubRepo: ''
     },
     {
         id: 'proj2',
         name: 'Recambios Touriño',
         featured: true,
         images: ['/images/projects/tourino.png'],
-        longDescription: 'Desarrollo de una tienda e-commerce con un extenso catálogo de recambios para automoción sobre PrestaShop. Implementé una estructura de categorías compleja, optimicé la búsqueda de productos y aseguré la compatibilidad en dispositivos móviles.',
+        longDescription: 'Desarrollo de una tienda e-commerce con un extenso catálogo de recambios para automoción sobre PrestaShop. Implementé una estructura de categorías compleja, optimicé la búsqueda de productos y aseguré la compatibilidad en dispositivos móviles. Hecha en Pontecerca',
         technologies: ['PrestaShop', 'PHP', 'MySQL', 'JavaScript', 'CSS'],
         liveDemo: 'https://www.recambiostourino.com/',
         githubRepo: ''
@@ -178,19 +188,13 @@ export const projects: Project[] = [
         name: 'Apartamentos de Mar',
         featured: true,
         images: ['/images/projects/demar.png'],
-        longDescription: 'Página web corporativa y de reservas para un complejo de apartamentos turísticos. El proyecto fue construido sobre WordPress y Elementor, con un enfoque en el diseño visual, la presentación de galerías de imágenes y la integración de un sistema de contacto.',
-        technologies: ['WordPress', 'Elementor', 'PHP', 'JavaScript', 'CSS'],
+        longDescription: 'Página web corporativa y de reservas para un complejo de apartamentos turísticos. El proyecto fue construido sobre WordPress usando Divi, con un enfoque en el diseño visual, la presentación de galerías de imágenes y la integración de un sistema de contacto. Hecha en Pontecerca',
+        technologies: ['WordPress', 'Divi', 'PHP', 'JavaScript', 'CSS'],
         liveDemo: 'https://www.apartamentosdemar.es/',
         githubRepo: ''
     }
 ];
 
-const languages: Language[] = [
-    { id: "es", name: "Español", level: "Nativo" },
-    { id: "gl", name: "Gallego", level: "Nativo" },
-    { id: "en", name: "Inglés", level: "Medio-Alto" },
-    { id: "pt", name: "Portugués", level: "Básico" }
-];
 
 
 // Simulate fetching data from a database
@@ -200,6 +204,3 @@ export const getEducation = async (): Promise<Education[]> => Promise.resolve(ed
 export const getSkills = async (): Promise<SkillCategory[]> => Promise.resolve(skills);
 export const getProjects = async (): Promise<Project[]> => Promise.resolve(projects);
 export const getProjectById = async (id: string): Promise<Project | undefined> => Promise.resolve(projects.find(p => p.id === id));
-export const getLanguages = async (): Promise<Language[]> => Promise.resolve(languages);
-
-    

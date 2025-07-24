@@ -1,15 +1,20 @@
 // src/components/layout/footer.tsx
-// NO 'use client'; aquí. Este es un Server Component.
-
 import React from 'react';
 
-// Puedes hacerlo async si necesitas obtener datos del servidor (ej: fecha de copyright dinámica)
 export default async function Footer() {
-  // const currentYear = await fetch('/api/current-year').then(res => res.json());
+  const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full py-4 text-center bg-gray-900 text-gray-400">
-      <p>&copy; {new Date().getFullYear()} Mi Portfolio. Todos los derechos reservados.</p>
+    <footer className="w-full py-8 text-center text-slate-500 font-mono text-sm">
+      <p>
+        Diseñado y desarrollado por Pedro Bargiela.
+      </p>
+      <p>
+        Construido con React, Next.js y Tailwind CSS. Alojado en Vercel.
+      </p>
+      <p className="mt-4">
+        &copy;{currentYear}. Todos los derechos reservados.
+      </p>
     </footer>
   );
 }

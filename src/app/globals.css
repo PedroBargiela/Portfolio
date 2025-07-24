@@ -451,3 +451,113 @@ body.overflow-auto {
     transform: translateY(-0.1em);
   }
 }
+
+/* === Estilos para el Botón de Contacto Brutalista === */
+.brutalist-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #000000;
+  border-radius: 12px;
+  padding: 0;
+  text-decoration: none;
+  color: #000000;
+  font-weight: bold;
+  position: relative;
+  box-shadow: 4px 4px 0px #000000;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  height: 130px;
+  width: 130px;
+  cursor: pointer;
+  background-color: hsl(var(--primary) / 0.8); /* Usamos tu color primario */
+}
+
+.brutalist-button::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -150%;
+  width: 300%;
+  height: 300%;
+  border-radius: 50%;
+  transform: translateX(-50%) scale(0);
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: 1;
+  background-color: hsl(var(--primary)); /* Usamos tu color primario */
+}
+
+.brutalist-button:hover::before {
+  transform: translateX(-50%) scale(1);
+}
+
+.brutalist-button:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 8px 8px 0px #000000;
+}
+
+.brutalist-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #000000;
+}
+
+.button-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left:48%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 90px;
+  height: 90px;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  font-size: 80px;
+  transform-origin: bottom center;
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  25% {
+    transform: translate(-50%, -50%) rotate(15deg);
+  }
+  75% {
+    transform: translate(-50%, -50%) rotate(-15deg);
+  }
+}
+
+.brutalist-button:hover .button-icon-wrapper {
+  animation: wave 1s ease-in-out infinite;
+  width: 80px;
+  height: 80px;
+  top: 30%;
+  font-size: 50px;
+}
+
+.button-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.3;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  z-index: 2;
+  position: absolute;
+  bottom: 22px;
+  left: 0;
+  right: 0;
+  color: hsl(var(--card-foreground)); /* Color de texto de tu tema */
+}
+
+
+
+.brutalist-button:hover .button-text {
+  opacity: 1;
+  transform: translateY(0);
+}

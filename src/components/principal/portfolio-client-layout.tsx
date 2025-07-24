@@ -11,6 +11,7 @@ import { TechIcon } from '@/components/tech-icon';
 import { SiGoodreads, SiLetterboxd, SiSpotify } from 'react-icons/si';
 import { SendButton } from '@/components/ui/send-button';
 import { ExperienceTabs } from '@/components/ui/experience-tabs';
+import { BrutalistContactButton } from '@/components/ui/brutalist-contact-button';
 
 
 type FormattedParagraph = {
@@ -485,10 +486,16 @@ export function PortfolioClientLayout({
 
                             {/* Los enlaces pequeños de abajo se mantienen */}
                             <div className={cn("mt-4 flex gap-4", index % 2 !== 0 && "justify-end")}>
-                                {project.githubRepo && (
-                                <Link href={project.githubRepo} target="_blank" className="text-slate-400 transition-colors hover:text-primary">
-                                    <ArrowRight className="h-6 w-6" />
-                                    <span className="sr-only">GitHub Repo</span>
+                            {project.githubRepo && (
+                                <Link 
+                                    href={project.githubRepo} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 font-mono text-sm text-slate-400 transition-colors hover:text-primary"
+                                    aria-label="Ver código en GitHub (se abre en una nueva pestaña)"
+                                >
+                                    <Github className="h-5 w-5" /> 
+                                    <span>Ver código en GitHub</span>
                                 </Link>
                                 )}
                             </div>
@@ -502,17 +509,13 @@ export function PortfolioClientLayout({
             {/* Contact Section */}
             <AnimatedSection>
                 <section ref={setRef('contact')} id="contact" className="mb-16 scroll-mt-24 text-center md:mb-24 lg:mb-36">
-                    <p className="font-mono text-lg text-primary">05. ¿Qué es lo siguiente?</p>
+                    <p className="font-mono text-2xl text-primary">05. ¿Qué es lo siguiente?</p>
                     <h2 className="mt-2 font-headline text-5xl font-bold text-slate-200">Ponte en Contacto</h2>
                     <p className="mx-auto mt-4 max-w-xl text-balance text-lg text-slate-400">
-                        Actualmente estoy abierto a nuevas oportunidades y mi bandeja de entrada está siempre disponible. Si tienes alguna pregunta o simplemente quieres saludar, ¡haré todo lo posible por responderte!
+                        Actualmente estoy abierto a nuevas oportunidades y mi bandeja de entrada está siempre disponible. No te olvides de visitar mis redes sociales y si tienes alguna pregunta o simplemente quieres saludar, ¡ahí estaré para responderte!
                     </p>
-                    <div className="mt-8">
-                        <Button asChild size="lg" variant="outline" className="group">
-                            <a href={`mailto:${profile.contact.email}`}>
-                                Di Hola <Mail className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
-                            </a>
-                        </Button>
+                    <div className="mt-8 flex justify-center">
+                        <BrutalistContactButton email={profile.contact.email} />
                     </div>
                 </section>
             </AnimatedSection>
