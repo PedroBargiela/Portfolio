@@ -44,18 +44,16 @@ export type SkillCategory = {
   items: { name: string }[];
 };
 
-export interface Project {
+export type Project = {
   id: string;
   name: string;
-  shortDescription: string;
+  featured: boolean;
+  images: string[];
   longDescription: string;
   technologies: string[];
-  images: string[];
-  videoURL: string;
-  githubRepo: string;
-  liveDemo: string;
-  featured: boolean;
-}
+  liveDemo?: string;
+  githubRepo?: string;
+};
 
 export interface Language {
   id: string;

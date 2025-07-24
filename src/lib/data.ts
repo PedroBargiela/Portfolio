@@ -92,12 +92,12 @@ export const skills: SkillCategory[] = [
         category: 'Frontend',
         items: [
             { name: 'JavaScript' },
+            { name: 'TypeScript' },
             { name: 'React' },
             { name: 'HTML' },
             { name: 'CSS' },
+            { name: 'Tailwind CSS' },
             { name: 'JQuery' },
-            { name: 'Elementor' },
-            { name: 'Divi' },
         ]
     },
     {
@@ -106,9 +106,11 @@ export const skills: SkillCategory[] = [
         items: [
             { name: 'PHP' },
             { name: 'CodeIgniter' },
+            { name: 'Node.js' },
             { name: 'Python' },
             { name: 'MySQL' },
             { name: 'MariaDB' },
+            { name: 'MongoDB' },
             { name: 'SQL' },
         ]
     },
@@ -121,8 +123,10 @@ export const skills: SkillCategory[] = [
             { name: 'Python' },
             { name: 'Pandas' },
             { name: 'TensorFlow' },
+            { name: 'PyTorch' },
             { name: 'Scikit-learn' },
             { name: 'NumPy' },
+            { name: 'Seaborn' },
         ]
     },
     {
@@ -139,44 +143,45 @@ export const skills: SkillCategory[] = [
         items: [
             { name: 'Git' },
             { name: 'GitHub' },
+            { name: 'Docker' },
             { name: 'SEO' },
             { name: 'SEM' },
             { name: 'Figma' },
             { name: 'Adobe XD' },
-            { name: 'Paquete Office' },
         ]
     }
 ];
 
-const projects: Project[] = [
+export const projects: Project[] = [
     {
-        id: "portfolio-website",
-        name: "Portafolio Personal v2",
-        shortDescription: "Este mismo portafolio, creado para mostrar mis habilidades y proyectos.",
-        longDescription: "Un portafolio personal diseñado e implementado con una estética moderna, inspirado en las mejores prácticas de la industria. Construido con Next.js y Tailwind CSS para un rendimiento óptimo y un diseño totalmente responsivo.",
-        technologies: ["React", "Next.js", "Tailwind CSS", "TypeScript"],
-        images: ["https://placehold.co/1200x800.png"],
-        githubRepo: "https://github.com/pedrobargiela/portfolio-v2",
-        liveDemo: "#",
+        id: 'proj1',
+        name: 'Conservas Areoso',
         featured: true,
+        images: ['/images/projects/areoso.png'],
+        longDescription: 'Tienda online desarrollada en WordPress para una conservera gourmet. Mi trabajo incluyó la creación completa de la web a partir de un diseño , la configuración de módulos de pago y envío, y la optimización del rendimiento para una experiencia de compra fluida.',
+        technologies: ['PrestaShop', 'PHP', 'MySQL', 'JavaScript', 'CSS'],
+        liveDemo: 'https://www.conservasareoso.es/',
+        githubRepo: '' // Deja en blanco si es privado
     },
     {
-        id: "e-commerce-platform",
-        name: "Plataforma E-commerce con PrestaShop",
-        shortDescription: "Una plataforma de comercio electrónico completa construida con PrestaShop.",
-        longDescription: "Desarrollo y mantenimiento de tiendas online basadas en PrestaShop, incluyendo personalización de temas, desarrollo de módulos a medida (pasarelas de pago, logística) y optimización de rendimiento.",
-        technologies: ["PrestaShop", "PHP", "MySQL", "JavaScript", "CSS"],
-        images: ["https://placehold.co/1200x800.png"],
+        id: 'proj2',
+        name: 'Recambios Touriño',
         featured: true,
+        images: ['/images/projects/tourino.png'],
+        longDescription: 'Desarrollo de una tienda e-commerce con un extenso catálogo de recambios para automoción sobre PrestaShop. Implementé una estructura de categorías compleja, optimicé la búsqueda de productos y aseguré la compatibilidad en dispositivos móviles.',
+        technologies: ['PrestaShop', 'PHP', 'MySQL', 'JavaScript', 'CSS'],
+        liveDemo: 'https://www.recambiostourino.com/',
+        githubRepo: ''
     },
     {
-        id: "legacy-app-maintenance",
-        name: "Mantenimiento App Legacy en CodeIgniter",
-        shortDescription: "Mantenimiento y desarrollo de nuevas features en una aplicación PHP con CodeIgniter.",
-        longDescription: "Responsable de la corrección de errores, refactorización de código y desarrollo de nuevas funcionalidades para una aplicación web existente construida sobre el framework PHP CodeIgniter, mejorando su estabilidad y rendimiento.",
-        technologies: ["PHP", "CodeIgniter", "MySQL", "JQuery", "Bootstrap"],
-        images: ["https://placehold.co/1200x800.png"],
+        id: 'proj3',
+        name: 'Apartamentos de Mar',
         featured: true,
+        images: ['/images/projects/demar.png'],
+        longDescription: 'Página web corporativa y de reservas para un complejo de apartamentos turísticos. El proyecto fue construido sobre WordPress y Elementor, con un enfoque en el diseño visual, la presentación de galerías de imágenes y la integración de un sistema de contacto.',
+        technologies: ['WordPress', 'Elementor', 'PHP', 'JavaScript', 'CSS'],
+        liveDemo: 'https://www.apartamentosdemar.es/',
+        githubRepo: ''
     }
 ];
 

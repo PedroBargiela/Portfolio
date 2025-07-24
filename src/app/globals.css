@@ -8,7 +8,7 @@ body {
 
 @layer base {
   :root {
-    --background: 170 25% 12%;
+    --background: 230 50% 12%;
     --foreground: 210 5% 45%;   /* Texto principal: gris oscuro (ajustado de light slate) */
     --card: 23 24% 16%;
     --card-foreground: 210 40% 98%;
@@ -37,7 +37,7 @@ body {
   .dark {
     /* Mantenemos estos igual que :root si tu tema oscuro y claro comparten los mismos colores base de texto y primario.
        Si quieres que el modo oscuro tenga tonos ligeramente diferentes, ajusta aquí. */
-    --background: 170 25% 12%;
+    --background: 230 50% 12%;
     --foreground: 210 5% 45%;
     --card: 23 24% 16%;
     --card-foreground: 210 40% 98%;
@@ -116,7 +116,7 @@ body {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-5px); /* Adjusted for smaller, subtle float */
+    transform: translateY(-5px);
   }
   100% {
     transform: translateY(0px);
@@ -401,7 +401,7 @@ body.overflow-auto {
 .send-button {
   font-family: inherit;
   font-size: 20px;
-  background: hsl(169, 45%, 42%); /* Usamos tu color primario */
+  background: hsl(204, 95%, 37%); /* Usamos tu color primario */
   color: #fff;
   padding: 0.7em 1em;
   padding-left: 0.9em;

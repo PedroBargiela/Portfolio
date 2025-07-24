@@ -341,7 +341,7 @@ export function PortfolioClientLayout({
                 </ul>
                 <div className="mt-12">
                     <a 
-                    href="/Pedro Bargiela - CV.pdf" 
+                    href="/CV Pedro Bargiela.pdf" 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="group inline-flex items-center font-semibold leading-tight text-slate-200 transition-colors duration-300 hover:text-primary"
@@ -403,8 +403,6 @@ export function PortfolioClientLayout({
                                 ))}
                             </ul>
                         </div>
-                        {/* --- SECCIÓN DE CONOCIMIENTOS --- */}
-                        {/* ▼▼ ESTE ES EL BLOQUE QUE HEMOS AÑADIDO ▼▼ */}
                         <div>
                             <h3 className="mb-6 flex items-center gap-3 font-headline text-xl font-semibold text-slate-300">
                                 {/* Puedes añadir un icono si quieres, ej: <Code className="h-6 w-6 text-primary" /> */}
@@ -418,7 +416,7 @@ export function PortfolioClientLayout({
                                     {category.items.map(skill => (
                                         <div key={skill.name} className={cn(
                                             "flex items-center gap-3 rounded-md px-4 py-2 transition-colors",
-                                            getTechColor(skill.name) // <-- Aquí llamamos a la función
+                                            getTechColor(skill.name)
                                             )}>
                                             {/* El TechIcon ahora también puede usar el color */}
                                             <TechIcon name={skill.name} className={cn("h-6 w-6", getTechColor(skill.name))} />
@@ -441,50 +439,61 @@ export function PortfolioClientLayout({
                         <span className="mr-2 font-mono text-2xl font-normal text-primary">04.</span>
                         Proyectos
                     </h2>
-                    <div className="space-y-16">
-                        {projects.filter(p => p.featured).map((project, index) => (
-                        <div key={project.id} className="grid grid-cols-1 items-center gap-6 md:grid-cols-2 transition-transform duration-300 hover:!opacity-100 hover:scale-[1.02] group-hover/list:opacity-50">
-                            <div className={cn("relative h-80 w-full group", index % 2 === 0 ? 'md:order-2' : '')}>
-                                <Link href={project.liveDemo || project.githubRepo || '#'} target="_blank">
-                                    <Image
-                                        src={project.images[0]}
-                                        alt={project.name}
-                                        fill
-                                        className="rounded-md object-cover"
-                                        data-ai-hint="abstract project"
-                                    />
-                                    <div className="absolute inset-0 rounded-md bg-primary/60 transition-all duration-300 group-hover:bg-transparent"></div>
+                    <div className="space-y-16 group/list">
+                    {projects.filter(p => p.featured).map((project, index) => (
+                        <a 
+                            key={project.id}
+                            href={project.liveDemo || project.githubRepo || '#'}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group relative grid grid-cols-1 items-center gap-6 md:grid-cols-2 transition-all duration-300 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"
+                        >
+                            {/* 2. Hemos añadido el div para el fondo iluminado, igual que en 'Experiencia'. */}
+                            <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md bg-primary/10 opacity-0 transition-all duration-300 motion-reduce:transition-none lg:block lg:group-hover:opacity-100 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+                            
+                            {/* Contenido de la Imagen (ahora sin su propio <Link>) */}
+                            <div className={cn("relative h-80 w-full", index % 2 === 0 ? 'md:order-2' : '')}>
+                            <Image
+                                src={project.images[0]}
+                                alt={project.name}
+                                fill
+                                className="rounded-md object-cover"
+                            />
+                            </div>
+
+                            {/* Contenido del Texto */}
+                            <div className={cn("relative z-10", index % 2 === 0 ? 'md:order-1 md:text-left' : 'md:text-right')}>
+                            <p className="font-mono text-sm text-primary">Proyecto Destacado</p>
+                            
+                            {/* 3. El título ahora tiene la flecha animada y ya no es un enlace individual. */}
+                            <h3 className="mt-2 inline-flex items-baseline font-headline text-2xl font-bold text-slate-200 group-hover:text-primary transition-colors duration-300">
+                                <span>{project.name}</span>
+                                <ArrowUpRight className="ml-2 h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                            </h3>
+
+                            <div className="my-4 rounded-md bg-[hsl(230,35%,15%)] p-6 shadow-lg">
+                                <p className="text-slate-400">{project.longDescription}</p>
+                            </div>
+
+                            <div className={cn("flex flex-wrap gap-2", index % 2 !== 0 && "justify-end")}>
+                                {project.technologies.map(tech => (
+                                <span key={tech} className="rounded-full bg-primary/10 px-3 py-1 font-mono text-sm text-primary">
+                                    {tech}
+                                </span>
+                                ))}
+                            </div>
+
+                            {/* Los enlaces pequeños de abajo se mantienen */}
+                            <div className={cn("mt-4 flex gap-4", index % 2 !== 0 && "justify-end")}>
+                                {project.githubRepo && (
+                                <Link href={project.githubRepo} target="_blank" className="text-slate-400 transition-colors hover:text-primary">
+                                    <ArrowRight className="h-6 w-6" />
+                                    <span className="sr-only">GitHub Repo</span>
                                 </Link>
+                                )}
                             </div>
-                            <div className={cn("relative", index % 2 === 0 ? 'md:order-1 md:text-left' : 'md:text-right')}>
-                                <p className="font-mono text-sm text-primary">Proyecto Destacado</p>
-                                <h3 className="mt-2 font-headline text-2xl font-bold text-slate-200 hover:text-primary">
-                                    <Link href={project.liveDemo || project.githubRepo || '#'} target="_blank">{project.name}</Link>
-                                </h3>
-                                <div className="my-4 rounded-md bg-card p-6 shadow-lg">
-                                    <p className="text-slate-400">{project.longDescription}</p>
-                                </div>
-                                <ul className={cn("flex flex-wrap gap-x-4 gap-y-2 font-mono text-sm text-slate-400", index % 2 !== 0 && "justify-end")}>
-                                    {project.technologies.map(tech => (
-                                    <li key={tech}>{tech}</li>
-                                    ))}
-                                </ul>
-                                <div className={cn("mt-4 flex gap-4", index % 2 !== 0 && "justify-end")}>
-                                    {project.githubRepo && (
-                                    <Link href={project.githubRepo} target="_blank" className="text-slate-400 transition-colors hover:text-primary">
-                                        <ArrowRight className="h-6 w-6" />
-                                        <span className="sr-only">GitHub Repo</span>
-                                    </Link>
-                                    )}
-                                    {project.liveDemo && project.liveDemo !== '#' && (
-                                    <Link href={project.liveDemo} target="_blank" className="text-slate-400 transition-colors hover:text-primary">
-                                        <ArrowRight className="h-6 w-6" />
-                                        <span className="sr-only">Live Demo</span>
-                                    </Link>
-                                    )}
-                                </div>
                             </div>
-                        </div>
+                        </a>
                         ))}
                     </div>
                 </section>

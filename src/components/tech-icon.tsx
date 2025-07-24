@@ -4,7 +4,8 @@
 import {
     SiJavascript, SiReact, SiHtml5, SiCss3, SiJquery, SiPhp, SiCodeigniter,
     SiPython, SiMysql, SiMariadb, SiWordpress, SiPrestashop, SiGit,
-    SiGithub, SiFigma, SiAdobe, SiPandas, SiTensorflow, SiNumpy, SiScikitlearn
+    SiGithub, SiFigma, SiAdobe, SiPandas, SiTensorflow, SiNumpy, SiScikitlearn,
+    SiTypescript, SiTailwindcss, SiNodedotjs, SiMongodb, SiDocker, SiPytorch
 } from 'react-icons/si';
 import { FaDatabase, FaQuestionCircle } from 'react-icons/fa';
 import { TbSeo } from 'react-icons/tb';
@@ -19,30 +20,34 @@ export function TechIcon({ name, className }: { name: string; className?: string
         // Frontend
         case 'javascript':
             return <SiJavascript className={className} />;
+        case 'typescript':
+            return <SiTypescript className={className} />;
         case 'react':
             return <SiReact className={className} />;
         case 'html':
             return <SiHtml5 className={className} />;
         case 'css':
             return <SiCss3 className={className} />;
+        case 'tailwind css':
+            return <SiTailwindcss className={className} />;
         case 'jquery':
             return <SiJquery className={className} />;
-        case 'elementor': // No tiene un icono popular, usamos uno genérico
-            return <FaQuestionCircle className={className} />;
-        case 'divi': // No tiene un icono popular, usamos uno genérico
-            return <FaQuestionCircle className={className} />;
 
         // Backend
         case 'php':
             return <SiPhp className={className} />;
         case 'codeigniter':
             return <SiCodeigniter className={className} />;
+        case 'node.js':  
+            return <SiNodedotjs className={className} />;
         case 'python':
             return <SiPython className={className} />;
         case 'mysql':
             return <SiMysql className={className} />;
         case 'mariadb':
             return <SiMariadb className={className} />;
+        case 'mongodb':       
+            return <SiMongodb className={className} />;
         case 'sql':
             return <FaDatabase className={className} />; // Icono genérico para SQL
         
@@ -54,6 +59,8 @@ export function TechIcon({ name, className }: { name: string; className?: string
             return <SiPandas className={className} />;
         case 'tensorflow':
             return <SiTensorflow className={className} />;
+        case 'pytorch':        
+            return <SiPytorch className={className} />;
         case 'scikit-learn':
             return <SiScikitlearn className={className} />;
         case 'numpy':
@@ -70,6 +77,8 @@ export function TechIcon({ name, className }: { name: string; className?: string
             return <SiGit className={className} />;
         case 'github':
             return <SiGithub className={className} />;
+        case 'docker':        
+            return <SiDocker className={className} />;
         case 'seo':
         case 'sem':
             return <TbSeo className={className} />; // Icono genérico para SEO/SEM
@@ -77,8 +86,6 @@ export function TechIcon({ name, className }: { name: string; className?: string
             return <SiFigma className={className} />;
         case 'adobe xd':
             return <SiAdobe className={className} />;
-        case 'paquete office': // No tiene icono, usamos uno genérico
-            return <FaQuestionCircle className={className} />;
 
         default:
         // Si no encuentra un icono, muestra uno de pregunta
