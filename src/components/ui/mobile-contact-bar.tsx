@@ -18,7 +18,7 @@ export function MobileContactBar({ showBackToTop, onScrollToTop }: MobileContact
                 
                 {/* Botón de Contactar a la izquierda */}
                 <Link 
-                href="#contact"
+                href="mailto:pedrobargiela@gmail.com"
                 className="rounded-md bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition-transform hover:scale-105 active:scale-95"
                 >
                     Contactar

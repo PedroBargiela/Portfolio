@@ -10,7 +10,7 @@ export default async function Footer() {
         Diseñado y desarrollado por Pedro Bargiela.
       </p>
       <p>
-        Construido con React, Next.js y Tailwind CSS. Alojado en Vercel.
+        Construido con React, Next.js y Tailwind CSS. Desplegado en Vercel.
       </p>
       <p className="mt-4">
         &copy;{currentYear}. Todos los derechos reservados.

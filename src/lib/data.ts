@@ -160,8 +160,8 @@ export const projects: Project[] = [
         images: ['/images/projects/portfolio.png'],
         longDescription: 'Mi portfolio personal, diseñado para mostrar mis habilidades. Construido desde cero con un enfoque en un diseño limpio y una experiencia de usuario fluida. Incluye una página de bienvenida animada, un layout asimétrico y efectos de foco interactivos.',
         technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
-        liveDemo: '#', // Cambia esto por la URL cuando lo despliegues
-        githubRepo: 'https://github.com/PedroBargiela/tu-repositorio' // Cambia esto por la URL de tu repo
+        liveDemo: 'https://www.pedrobargiela.com/',
+        githubRepo: 'https://github.com/PedroBargiela/Portfolio'
     },
     {
         id: 'proj1',
