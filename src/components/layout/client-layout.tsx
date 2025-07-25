@@ -3,13 +3,12 @@
 
 import { useState, useEffect } from 'react';
 import { LauncherPage } from '@/components/homepage/LauncherPage';
-import { useIsDesktop } from '@/hooks/use-is-desktop';
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
     const [showLauncher, setShowLauncher] = useState<boolean | null>(null);
-    const isDesktop = useIsDesktop(); // <-- 2. Usa el hook
 
     useEffect(() => {
+        // Esta lógica se mantiene igual
         const hasVisited = sessionStorage.getItem('hasVisitedLauncherpage') === 'true';
         setShowLauncher(!hasVisited);
     }, []);
@@ -19,16 +18,16 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
         setShowLauncher(false);
     };
     
-    // Mientras no sepamos el tamaño de la pantalla, no mostramos nada
-    if (isDesktop === null) {
-        return null;
+    // Mientras esperamos a saber si mostrar el launcher, no mostramos nada
+    if (showLauncher === null) {
+        return null; 
     }
 
-    // 3. Modifica la condición: solo muestra el launcher SI es escritorio Y es la primera visita
-    if (isDesktop && showLauncher) {
+    // Ahora la condición es simple: solo depende de si ya se ha visitado o no
+    if (showLauncher) {
         return <LauncherPage onEnterPortfolio={handleEnterPortfolio} />;
     }
 
-    // Para móvil, o si ya se visitó en escritorio, muestra directamente el portfolio
+    // Si no, muestra el portfolio
     return <>{children}</>;
 }

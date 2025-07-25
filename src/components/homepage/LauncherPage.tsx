@@ -2,242 +2,138 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import { useIsDesktop } from '@/hooks/use-is-desktop'; // Importamos el hook
 
 interface LauncherPageProps {
     onEnterPortfolio: () => void;
-}
+    }
 
-export function LauncherPage({ onEnterPortfolio }: LauncherPageProps) {
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    export function LauncherPage({ onEnterPortfolio }: LauncherPageProps) {
+    const isDesktop = useIsDesktop();
     const containerRef = useRef<HTMLDivElement>(null);
     const [exiting, setExiting] = useState(false);
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [permissionGranted, setPermissionGranted] = useState(false);
 
     useEffect(() => {
+        // Lógica para PC (ratón)
         const handleMouseMove = (event: MouseEvent) => {
-            if (containerRef.current) {
-                const { clientX, clientY } = event;
-                const { offsetWidth, offsetHeight } = containerRef.current;
-                const x = (clientX / offsetWidth) - 0.5;
-                const y = (clientY / offsetHeight) - 0.5;
-                setMousePosition({ x, y });
-            }
+        if (containerRef.current) {
+            const { clientX, clientY } = event;
+            const { offsetWidth, offsetHeight } = containerRef.current;
+            const x = (clientX / offsetWidth) - 0.5;
+            const y = (clientY / offsetHeight) - 0.5;
+            setPosition({ x, y });
+        }
         };
 
+        // Lógica para Móvil (giroscopio)
+        const handleOrientation = (event: DeviceOrientationEvent) => {
+        if (event.gamma !== null && event.beta !== null) {
+            const x = event.gamma / 90; // Inclinación izq/der
+            const y = event.beta / 180; // Inclinación adelante/atrás
+            setPosition({ x, y });
+        }
+        };
+
+        if (isDesktop) {
         window.addEventListener('mousemove', handleMouseMove);
+        } else if (permissionGranted) {
+        window.addEventListener('deviceorientation', handleOrientation);
+        }
 
         return () => {
+        if (isDesktop) {
             window.removeEventListener('mousemove', handleMouseMove);
+        } else if (permissionGranted) {
+            window.removeEventListener('deviceorientation', handleOrientation);
+        }
         };
-    }, []);
+    }, [isDesktop, permissionGranted]);
 
     const getParallaxStyle = (depth: number) => {
         return {
-            transform: `translate3d(calc(${mousePosition.x * depth}px - 50%), calc(${mousePosition.y * depth}px - 50%), 0)`,
-            transition: 'transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        transform: `translate3d(calc(${position.x * depth}px - 50%), calc(${position.y * depth}px - 50%), 0)`,
+        transition: 'transform 0.1s ease-out',
         };
     };
 
-    const handleButtonClick = () => {
+    const handleButtonClick = async () => {
+        if (!isDesktop && typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
+        const permission = await (DeviceOrientationEvent as any).requestPermission();
+        if (permission === 'granted') {
+            setPermissionGranted(true);
+        }
+        } else {
+        setPermissionGranted(true); 
+        }
+
         setExiting(true);
         setTimeout(() => {
-            onEnterPortfolio(); // cambia la vista al portfolio
-        }, 100);
+        onEnterPortfolio();
+        }, 500);
     };
+    
+    if (isDesktop === null) return null;
 
     return (
         <div
-            ref={containerRef}
-            className={cn(
-                "fixed inset-0 flex flex-col items-center justify-center text-center z-[10000] overflow-hidden",
-                "transition-opacity duration-500 ease-out",
-                "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#1C304A] via-[#0A192F] to-[#01091A]",
-                "bg-cover bg-center", // Asegura que el degradado ocupe toda la pantalla
-                { "opacity-0": exiting }
-            )}
+        ref={containerRef}
+        className={cn(
+            "fixed inset-0 flex flex-col items-center justify-center text-center z-[10000] overflow-hidden",
+            "transition-opacity duration-500 ease-out",
+            "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#1C304A] via-[#0A192F] to-[#01091A]",
+            { "opacity-0": exiting }
+        )}
         >
-            {/* Elementos de fondo (formas y texto) con un div wrapper para el parallax */}
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(70), top: '10%', left: '15%' }}
-            >
-                <div className="w-32 h-32 bg-blue-500/10 rounded-full blur-2xl animate-float-slow"></div>
-            </div>
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(40), bottom: '5%', right: '10%' }}
-            >
-                <div className="w-48 h-48 bg-green-500/10 rounded-full blur-2xl animate-float"></div>
-            </div>
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(30), top: '20%', right: '5%' }}
-            >
-                <div className="text-muted-foreground text-opacity-20 text-7xl font-mono select-none animate-float-fast">
-                    {'{}'}
-                </div>
-            </div>
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(55), bottom: '15%', left: '20%' }}
-            >
-                <div className="text-muted-foreground text-opacity-20 text-6xl font-mono select-none animate-float-slow">
-                    {'</>'}
-                </div>
-            </div>
-
-            {/* --- Logos de tecnologías flotando y con parallax --- */}
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(80), top: '40%', left: '10%' }}
-            >
-                <img
-                    src="/logos/javascript.svg"
-                    alt="JavaScript Logo"
-                    className="w-16 h-16 opacity-30 animate-float-slow"
-                />
-            </div>
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(70), top: '60%', left: '15%' }}
-            >
-                <img
-                    src="/logos/react.svg"
-                    alt="React Logo"
-                    className="w-16 h-16 opacity-30 animate-float"
-                />
-            </div>
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(90), top: '15%', left: '40%' }}
-            >
-                <img
-                    src="/logos/nextjs.svg"
-                    alt="Next.js Logo"
-                    className="w-20 h-20 opacity-30 animate-float-fast"
-                />
-            </div>
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(60), bottom: '20%', right: '10%' }}
-            >
-                <img
-                    src="/logos/python.svg"
-                    alt="Python Logo"
-                    className="w-16 h-16 opacity-30 animate-float-slow"
-                />
-            </div>
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(45), bottom: '10%', left: '45%' }}
-            >
-                <img
-                    src="/logos/php.svg"
-                    alt="PHP Logo"
-                    className="w-16 h-16 opacity-30 animate-float"
-                />
-            </div>
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(85), top: '25%', left: '25%' }}
-            >
-                <img
-                    src="/logos/css.svg"
-                    alt="CSS Logo"
-                    className="w-16 h-16 opacity-30 animate-float-fast"
-                />
-            </div>
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(55), top: '50%', right: '5%' }}
-            >
-                <img
-                    src="/logos/docker.svg"
-                    alt="Docker Logo"
-                    className="w-20 h-20 opacity-30 animate-float-slow"
-                />
-            </div>
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(70), bottom: '70%', left: '80%' }}
-            >
-                <img
-                    src="/logos/git.svg"
-                    alt="Git Logo"
-                    className="w-16 h-16 opacity-30 animate-float"
-                />
-            </div>
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(95), top: '10%', right: '25%' }}
-            >
-                <img
-                    src="/logos/github.svg"
-                    alt="GitHub Logo"
-                    className="w-20 h-20 opacity-30 animate-float-fast"
-                />
-            </div>
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(40), top: '15%', right: '40%' }}
-            >
-                <img
-                    src="/logos/aws.svg"
-                    alt="GitHub Logo"
-                    className="w-20 h-20 opacity-30 animate-float-fast"
-                />
-            </div>
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(50), bottom: '5%', right: '40%' }}
-            >
-                <img
-                    src="/logos/nodejs.svg"
-                    alt="Node.js Logo"
-                    className="w-20 h-20 opacity-30 animate-float-slow"
-                />
-            </div>
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(65), top: '75%', left: '30%' }}
-            >
-                <img
-                    src="/logos/codeigniter.svg"
-                    alt="CodeIgniter Logo"
-                    className="w-16 h-16 opacity-30 animate-float"
-                />
-            </div>
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(80), top: '10%', left: '20%' }}
-            >
-                <img
-                    src="/logos/prestashop.svg"
-                    alt="PrestaShop Logo"
-                    className="w-16 h-16 opacity-30 animate-float-fast"
-                />
-            </div>
-            <div
-                className="absolute"
-                style={{ ...getParallaxStyle(70), bottom: '15%', left: '75%' }}
-            >
-                <img
-                    src="/logos/wordpress.svg"
-                    alt="WordPress Logo"
-                    className="w-20 h-20 opacity-30 animate-float-slow"
-                />
-            </div>
-
+            {/* ====================================================== */}
+            {/* RENDERIZADO CONDICIONAL DE ICONOS DE FONDO */}
+            {/* ====================================================== */}
+            {isDesktop ? (
+                <>
+                {/* --- ICONOS PARA ESCRITORIO (PC) - La versión original --- */}
+                <div className="absolute" style={{ ...getParallaxStyle(70), top: '10%', left: '15%' }}><div className="w-32 h-32 bg-blue-500/10 rounded-full blur-2xl animate-float-slow"></div></div>
+                <div className="absolute" style={{ ...getParallaxStyle(40), bottom: '5%', right: '10%' }}><div className="w-48 h-48 bg-green-500/10 rounded-full blur-2xl animate-float"></div></div>
+                <div className="absolute" style={{ ...getParallaxStyle(30), top: '20%', right: '5%' }}><div className="text-muted-foreground text-opacity-20 text-7xl font-mono select-none animate-float-fast">{'{}'}</div></div>
+                <div className="absolute" style={{ ...getParallaxStyle(55), bottom: '15%', left: '20%' }}><div className="text-muted-foreground text-opacity-20 text-6xl font-mono select-none animate-float-slow">{'</>'}</div></div>
+                <div className="absolute" style={{ ...getParallaxStyle(80), top: '40%', left: '10%' }}><img src="/logos/javascript.svg" alt="JavaScript" className="w-16 h-16 opacity-30 animate-float-slow" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(70), top: '60%', left: '15%' }}><img src="/logos/react.svg" alt="React" className="w-16 h-16 opacity-30 animate-float" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(90), top: '15%', left: '40%' }}><img src="/logos/nextjs.svg" alt="Next.js" className="w-20 h-20 opacity-30 animate-float-fast" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(60), bottom: '20%', right: '10%' }}><img src="/logos/python.svg" alt="Python" className="w-16 h-16 opacity-30 animate-float-slow" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(45), bottom: '10%', left: '45%' }}><img src="/logos/php.svg" alt="PHP" className="w-16 h-16 opacity-30 animate-float" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(85), top: '25%', left: '25%' }}><img src="/logos/css.svg" alt="CSS" className="w-16 h-16 opacity-30 animate-float-fast" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(55), top: '50%', right: '5%' }}><img src="/logos/docker.svg" alt="Docker" className="w-20 h-20 opacity-30 animate-float-slow" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(70), bottom: '70%', left: '80%' }}><img src="/logos/git.svg" alt="Git" className="w-16 h-16 opacity-30 animate-float" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(95), top: '10%', right: '25%' }}><img src="/logos/github.svg" alt="GitHub" className="w-20 h-20 opacity-30 animate-float-fast" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(40), top: '15%', right: '40%' }}><img src="/logos/aws.svg" alt="AWS" className="w-20 h-20 opacity-30 animate-float-fast" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(50), bottom: '5%', right: '40%' }}><img src="/logos/nodejs.svg" alt="Node.js" className="w-20 h-20 opacity-30 animate-float-slow" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(65), top: '75%', left: '30%' }}><img src="/logos/codeigniter.svg" alt="CodeIgniter" className="w-16 h-16 opacity-30 animate-float" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(80), top: '10%', left: '20%' }}><img src="/logos/prestashop.svg" alt="PrestaShop" className="w-16 h-16 opacity-30 animate-float-fast" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(70), bottom: '15%', left: '75%' }}><img src="/logos/wordpress.svg" alt="WordPress" className="w-20 h-20 opacity-30 animate-float-slow" /></div>
+                </>
+            ) : (
+                <>
+                {/* --- ICONOS PARA MÓVIL (RESPONSIVE) - La versión con 8 logos --- */}
+                <div className="absolute" style={{ ...getParallaxStyle(80), top: '15%', left: '15%' }}><img src="/logos/react.svg" alt="React" className="w-16 h-16 opacity-20 animate-float" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(90), top: '13%', right: '30%' }}><img src="/logos/nextjs.svg" alt="Next.js" className="w-20 h-20 opacity-20 animate-float-fast" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(70), top: '13%', right: '8%' }}><img src="/logos/javascript.svg" alt="JavaScript" className="w-14 h-14 opacity-20 animate-float-slow" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(60), bottom: '2%', left: '15%' }}><img src="/logos/python.svg" alt="Python" className="w-16 h-16 opacity-20 animate-float-slow" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(50), bottom: '0%', right: '0%' }}><img src="/logos/nodejs.svg" alt="Node.js" className="w-20 h-20 opacity-20 animate-float" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(85), top: '65%', left: '20%' }}><img src="/logos/codeigniter.svg" alt="CodeIgniter" className="w-20 h-20 opacity-20 animate-float-fast" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(75), bottom: '25%', right: '5%' }}><img src="/logos/php.svg" alt="PHP" className="w-16 h-16 opacity-20 animate-float" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(65), top: '90%', right: '30%' }}><img src="/logos/git.svg" alt="Git" className="w-20 h-20 opacity-20 animate-float-slow" /></div>
+                </>
+            )}
             {/* Contenido principal (más cercano, fijo en su posición) */}
-            <div className="relative z-10 flex flex-col items-center">
-                <h1 className="text-6xl md:text-8xl font-bold text-foreground transition-colors duration-300">
+            <div className="relative z-10 flex w-4/5 flex-col items-center md:w-full">
+                <h1 className="text-5xl font-bold text-foreground transition-colors duration-300 md:text-8xl">
                     Pedro Bargiela
                 </h1>
-                <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mt-5 mb-2">
-                Desarrollador Full Stack | ML, Data Science & IA
+                <p className="mt-5 mb-2 max-w-2xl text-lg text-muted-foreground md:text-2xl">
+                    Desarrollador Full Stack | ML, Data Science & IA
                 </p>
-                <p className="text-xl md:text-1xl text-muted-foreground max-w-1xl mt-0 mb-10">
-                Transformo datos en aplicaciones inteligentes y funcionales para el mundo real
+                <p className="mt-0 mb-10 max-w-xl text-base text-muted-foreground md:text-xl">
+                    Transformo datos en aplicaciones inteligentes y funcionales para el mundo real
                 </p>
                 {/* <Button
                     onClick={handleButtonClick}

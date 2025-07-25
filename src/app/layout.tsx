@@ -1,4 +1,5 @@
 import './globals.css';
+import type { Metadata } from 'next';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
@@ -6,6 +7,11 @@ import { LeftSocialBar, RightEmailBar } from '@/components/layout/side-bars';
 import { CustomCursor } from '@/components/ui/custom-cursor';
 import { ClientLayout } from '@/components/layout/client-layout';
 
+
+export const metadata: Metadata = {
+  title: 'Pedro Bargiela',
+  description: 'Portfolio de Pedro Bargiela, Desarrollador Full Stack, ML, Data Science & IA.',
+};
 
 export default function RootLayout({
   children,
