@@ -12,7 +12,7 @@ interface MobileContactBarProps {
 
 export function MobileContactBar({ showBackToTop, onScrollToTop }: MobileContactBarProps) {
     return (
-        <div className="fixed bottom-0 left-0 z-50 w-full border-t border-border bg-background/95 p-2 backdrop-blur-sm lg:hidden">
+        <div className="fixed bottom-0 left-0 z-50 w-full border-t border-border bg-background/95 p-6 backdrop-blur-sm lg:hidden">
         {/* Usamos flexbox para alinear los dos botones */}
             <div className="flex items-center justify-between">
                 
