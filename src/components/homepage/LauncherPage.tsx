@@ -2,18 +2,39 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
-import { useIsDesktop } from '@/hooks/use-is-desktop'; // Importamos el hook
+import { useIsDesktop } from '@/hooks/use-is-desktop';
 
 interface LauncherPageProps {
     onEnterPortfolio: () => void;
-    }
+}
 
-    export function LauncherPage({ onEnterPortfolio }: LauncherPageProps) {
+export function LauncherPage({ onEnterPortfolio }: LauncherPageProps) {
     const isDesktop = useIsDesktop();
     const containerRef = useRef<HTMLDivElement>(null);
     const [exiting, setExiting] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
-    const [permissionGranted, setPermissionGranted] = useState(false);
+
+    // Lógica del giroscopio
+    const handleOrientation = (event: DeviceOrientationEvent) => {
+        if (event.gamma !== null && event.beta !== null) {
+        const x = event.gamma / 45; // Aumentamos la sensibilidad
+        const y = event.beta / 90;
+        setPosition({ x: Math.min(Math.max(x, -1), 1), y: Math.min(Math.max(y, -1), 1) });
+        }
+    };
+
+    // Función para pedir permiso e iniciar la escucha
+    const startGyroscope = async () => {
+        if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
+        const permission = await (DeviceOrientationEvent as any).requestPermission();
+        if (permission === 'granted') {
+            window.addEventListener('deviceorientation', handleOrientation);
+        }
+        } else {
+        // Para navegadores que no requieren permiso (ej. Android)
+        window.addEventListener('deviceorientation', handleOrientation);
+        }
+    };
 
     useEffect(() => {
         // Lógica para PC (ratón)
@@ -27,29 +48,19 @@ interface LauncherPageProps {
         }
         };
 
-        // Lógica para Móvil (giroscopio)
-        const handleOrientation = (event: DeviceOrientationEvent) => {
-        if (event.gamma !== null && event.beta !== null) {
-            const x = event.gamma / 90; // Inclinación izq/der
-            const y = event.beta / 180; // Inclinación adelante/atrás
-            setPosition({ x, y });
-        }
-        };
-
         if (isDesktop) {
         window.addEventListener('mousemove', handleMouseMove);
-        } else if (permissionGranted) {
-        window.addEventListener('deviceorientation', handleOrientation);
         }
 
+        // Limpieza del efecto
         return () => {
         if (isDesktop) {
             window.removeEventListener('mousemove', handleMouseMove);
-        } else if (permissionGranted) {
+        } else {
             window.removeEventListener('deviceorientation', handleOrientation);
         }
         };
-    }, [isDesktop, permissionGranted]);
+    }, [isDesktop]);
 
     const getParallaxStyle = (depth: number) => {
         return {
@@ -58,14 +69,10 @@ interface LauncherPageProps {
         };
     };
 
-    const handleButtonClick = async () => {
-        if (!isDesktop && typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
-        const permission = await (DeviceOrientationEvent as any).requestPermission();
-        if (permission === 'granted') {
-            setPermissionGranted(true);
-        }
-        } else {
-        setPermissionGranted(true); 
+    const handleButtonClick = () => {
+        // Si es móvil, intentamos activar el giroscopio
+        if (!isDesktop) {
+        startGyroscope();
         }
 
         setExiting(true);
@@ -97,7 +104,7 @@ interface LauncherPageProps {
                 <div className="absolute" style={{ ...getParallaxStyle(30), top: '20%', right: '5%' }}><div className="text-muted-foreground text-opacity-20 text-7xl font-mono select-none animate-float-fast">{'{}'}</div></div>
                 <div className="absolute" style={{ ...getParallaxStyle(55), bottom: '15%', left: '20%' }}><div className="text-muted-foreground text-opacity-20 text-6xl font-mono select-none animate-float-slow">{'</>'}</div></div>
                 <div className="absolute" style={{ ...getParallaxStyle(80), top: '40%', left: '10%' }}><img src="/logos/javascript.svg" alt="JavaScript" className="w-16 h-16 opacity-30 animate-float-slow" /></div>
-                <div className="absolute" style={{ ...getParallaxStyle(70), top: '60%', left: '15%' }}><img src="/logos/react.svg" alt="React" className="w-16 h-16 opacity-30 animate-float" /></div>
+                <div className="absolute" style={{ ...getParallaxStyle(70), top: '65%', left: '15%' }}><img src="/logos/react.svg" alt="React" className="w-16 h-16 opacity-30 animate-float" /></div>
                 <div className="absolute" style={{ ...getParallaxStyle(90), top: '15%', left: '40%' }}><img src="/logos/nextjs.svg" alt="Next.js" className="w-20 h-20 opacity-30 animate-float-fast" /></div>
                 <div className="absolute" style={{ ...getParallaxStyle(60), bottom: '20%', right: '10%' }}><img src="/logos/python.svg" alt="Python" className="w-16 h-16 opacity-30 animate-float-slow" /></div>
                 <div className="absolute" style={{ ...getParallaxStyle(45), bottom: '10%', left: '45%' }}><img src="/logos/php.svg" alt="PHP" className="w-16 h-16 opacity-30 animate-float" /></div>
