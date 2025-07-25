@@ -5,13 +5,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { ArrowUpRight, ArrowRight, Briefcase, GraduationCap, Mail, Send, Github, Instagram, Linkedin } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Briefcase, GraduationCap, Brain, Mail, Send, Github, Instagram, Linkedin } from 'lucide-react';
 import { AnimatedSection } from '@/components/ui/animated-section';
 import { TechIcon } from '@/components/tech-icon';
 import { SiGoodreads, SiLetterboxd, SiSpotify } from 'react-icons/si';
 import { SendButton } from '@/components/ui/send-button';
 import { ExperienceTabs } from '@/components/ui/experience-tabs';
 import { BrutalistContactButton } from '@/components/ui/brutalist-contact-button';
+import { MobileContactBar } from '@/components/ui/mobile-contact-bar';
 
 
 type FormattedParagraph = {
@@ -142,6 +143,29 @@ export function PortfolioClientLayout({
     children,
     }: PortfolioClientLayoutProps) {
     const [activeSection, setActiveSection] = useState('');
+    const [showBackToTop, setShowBackToTop] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+          if (window.scrollY > 400) { // Aparece después de 400px de scroll
+            setShowBackToTop(true);
+            } else {
+            setShowBackToTop(false);
+            }
+        };
+    
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+    
+      // Función para hacer scroll suave hacia arriba
+        const scrollToTop = () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+            });
+        };
+
     const sectionsRef = useRef<Map<string, HTMLElement>>(new Map());
 
     useEffect(() => {
@@ -169,21 +193,23 @@ export function PortfolioClientLayout({
     }, []);
     
     const setRef = (id: string) => (el: HTMLElement | null) => {
-        if (el) {
-        sectionsRef.current.set(id, el);
-        } else {
-        sectionsRef.current.delete(id);
-        }
+        if (el) sectionsRef.current.set(id, el);
+        else sectionsRef.current.delete(id);
     };
 
     return (
-        <div className="container mx-auto max-w-7xl">
-        <div className="lg:grid lg:grid-cols-2">
+        <>
+        <MobileContactBar 
+            showBackToTop={showBackToTop} 
+            onScrollToTop={scrollToTop} 
+        />
+        <div className="w-[85%] lg:w-full mx-auto max-w-7xl">
+        <div className="lg:grid lg:grid-cols-2 lg:gap-16">
             
             {/* ================================== */}
             {/* ==      COLUMNA IZQUIERDA (FIJA)      == */}
             {/* ================================== */}
-            <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-full lg:flex-col lg:justify-between lg:py-24">
+            <header className="flex flex-col items-center text-center px-0 py-16 sm:px-8 lg:sticky lg:top-0 lg:items-start lg:text-left lg:max-h-screen lg:w-full lg:flex-col lg:justify-between lg:px-0 lg:py-24">
             <div>
                 <h1 className="font-headline text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl">
                 <Link href="/">{profile.name}</Link>
@@ -199,21 +225,28 @@ export function PortfolioClientLayout({
                 {profile.shortDescription}
                 </p>
 
-                <nav className="mt-12 hidden lg:block">
-                <ul className="space-y-4">
+                <nav className="mt-7 hidden lg:block">
+                <ul className="space-y-2">
                     {navLinks.map((link) => (
                     <li key={link.href}>
                         <Link href={link.href} className="group inline-flex items-center gap-4">
-                        <span className={cn(
-                            "h-px w-8 bg-slate-500 transition-all group-hover:w-16 group-hover:bg-slate-200",
-                            activeSection === link.href.substring(1) && "w-16 bg-slate-200"
-                        )}></span>
-                        <span className={cn(
-                            "text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-slate-200",
-                            activeSection === link.href.substring(1) && "text-slate-200"
-                        )}>
-                            {link.label}
-                        </span>
+                            <span className={cn(
+                                "h-px w-8 bg-slate-500 transition-all group-hover:w-16 group-hover:bg-slate-200",
+                                activeSection === link.href.substring(1) && "w-16 bg-slate-200"
+                            )}></span>
+                            <div className="relative">
+                                <span className={cn(
+                                    "text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-slate-200",
+                                    activeSection === link.href.substring(1) && "text-slate-200"
+                                )}>
+                                    {link.label}
+                                </span>
+                                {link.label === 'Proyectos' && (
+                                    <span className="absolute -top-2 -right-0 translate-x-1/2 text-[10px] font-bold uppercase new-badge">
+                                        Nuevos
+                                    </span>
+                                )}
+                            </div>
                         </Link>
                     </li>
                     ))}
@@ -221,11 +254,11 @@ export function PortfolioClientLayout({
                 </nav>
             </div>
 
-            <div className="mt-10 flex justify-start">
+            <div className="mt-10 hidden lg:flex lg:justify-start">
             <SendButton />
             </div>
             
-            <div className="mt-5 flex items-center gap-4 text-slate-400">
+            <div className="mt- flex items-center gap-4 text-slate-400">
                 <ul className="mt-8 flex items-center" aria-label="Social media">
                     <li className="mr-5">
                         <a href="https://github.com/PedroBargiela" target="_blank" rel="noreferrer noopener" aria-label="GitHub" className="block text-slate-400 hover:text-slate-200 transition-all duration-300 hover:-translate-y-1">
@@ -270,12 +303,12 @@ export function PortfolioClientLayout({
         {/* ================================== */}
         {/* ==     COLUMNA DERECHA (SCROLL)     == */}
         {/* ================================== */}
-        <main className="py-24">
+        <main className="pb-6 pt-8 lg:py-24">
             {/* About Section */}
             <AnimatedSection>
-                <section ref={setRef('about')} id="about" className="mb-16 scroll-mt-24 md:mb-24 lg:mb-36">
-                <h2 className="mb-8 flex items-center font-headline text-xl font-semibold text-slate-200 sm:text-2xl">
-                    <span className="mr-2 font-mono text-2lg font-normal text-primary">01.</span>
+                <section ref={setRef('about')} id="about" className="mb-12 scroll-mt-24 md:mb-16 lg:mb-20">
+                <h2 className="sticky top-0 z-30 bg-background/75 backdrop-blur-md -mx-4 sm:-mx-8 px-4 sm:px-8 py-4 mb-1 flex items-center font-headline text-xl font-semibold text-slate-200 sm:text-2xl lg:static lg:bg-transparent lg:backdrop-blur-none lg:mx-0 lg:px-0 lg:py-0 lg:mb-8">
+                    <span className="mr-2 font-mono text-2xl font-normal text-primary">01.</span>
                     Sobre Mí
                 </h2>
                 <div>
@@ -302,19 +335,19 @@ export function PortfolioClientLayout({
 
             {/* Experience Section */}
             <AnimatedSection>
-                <section ref={setRef('experience')} id="experience" className="mb-16 scroll-mt-24 md:mb-24 lg:mb-36">
-                <h2 className="mb-8 flex items-center font-headline text-xl font-semibold text-slate-200 sm:text-2xl">
+                <section ref={setRef('experience')} id="experience" className="mb-12 scroll-mt-24 md:mb-16 lg:mb-20">
+                <h2 className="sticky top-0 z-30 bg-background/75 backdrop-blur-md -mx-4 sm:-mx-8 px-4 sm:px-8 py-4 mb-1 flex items-center font-headline text-xl font-semibold text-slate-200 sm:text-2xl lg:static lg:bg-transparent lg:backdrop-blur-none lg:mx-0 lg:px-0 lg:py-0 lg:mb-8">
                     <span className="mr-2 font-mono text-2xl font-normal text-primary">02.</span>
                     Experiencia
                 </h2>
-                <ul className="group/list space-y-8">
+                <ul className="group/list space-y-12">
                     {experience.map((item) => (
                         <li key={item.id}>
                             <a 
                             href={item.companyUrl || '#'}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group relative grid grid-cols-8 gap-4 transition-all duration-300 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"
+                            className="group relative block transition-all duration-300 sm:grid sm:grid-cols-8 sm:gap-8 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"
                             >                           
                             <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md bg-primary/10 opacity-0 transition-all duration-300 motion-reduce:transition-none lg:block lg:group-hover:opacity-100 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
                             <header className="z-10 mb-2 mt-1 font-mono text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">
@@ -357,20 +390,20 @@ export function PortfolioClientLayout({
 
             {/* Skills & Education Section */}
             <AnimatedSection>
-                <section ref={setRef('skills')} id="skills" className="mb-16 scroll-mt-24 md:mb-24 lg:mb-36">
-                    <h2 className="mb-8 flex items-center font-headline text-xl font-semibold text-slate-200 sm:text-2xl">
+                <section ref={setRef('skills')} id="skills" className="mb-12 scroll-mt-24 md:mb-16 lg:mb-20">
+                    <h2 className="sticky top-0 z-30 bg-background/75 backdrop-blur-md -mx-4 sm:-mx-8 px-4 sm:px-8 py-4 flex items-center font-headline text-xl font-semibold text-slate-200 sm:text-2xl lg:static lg:bg-transparent lg:backdrop-blur-none lg:mx-0 lg:px-0 lg:py-0 lg:mb-8">
                         <span className="mr-2 font-mono text-2xl font-normal text-primary">03.</span>
                         Formación y Conocimientos
                     </h2>
                     
-                    <div className="space-y-12">
+                    <div className="space-y-16">
                         <div>
-                            <h3 className="mb-6 flex items-center gap-3 font-headline text-xl font-semibold text-slate-300">
+                            <h3 className="mb-3 lg:mb-8 flex items-center gap-3 font-headline text-xl font-semibold text-slate-300">
                                 <GraduationCap className="h-6 w-6 text-primary" /> Formación Académica
                             </h3>
                             
                             {/* El contenedor principal de la lista, nombrado 'list' para el group-hover. */}
-                            <ul className="group/list space-y-8">
+                            <ul className="group/list space-y-12">
                                 {education.map(item => (
                                 <li key={item.id}>
                                     {/* 1. Eliminamos el grid y las columnas. Ahora es un bloque simple. */}
@@ -405,11 +438,10 @@ export function PortfolioClientLayout({
                             </ul>
                         </div>
                         <div>
-                            <h3 className="mb-6 flex items-center gap-3 font-headline text-xl font-semibold text-slate-300">
-                                {/* Puedes añadir un icono si quieres, ej: <Code className="h-6 w-6 text-primary" /> */}
-                                Conocimientos Técnicos
+                            <h3 className="mb-3 lg:mb-8 flex items-center gap-3 font-headline text-xl font-semibold text-slate-300">
+                                <Brain className="h-6 w-6 text-primary" />Conocimientos Técnicos
                             </h3>
-                            <div className="space-y-8">
+                            <div className="space-y-12">
                                 {skills.map(category => (
                                 <div key={category.id}>
                                     <h4 className="mb-4 font-headline text-lg font-semibold text-slate-300">{category.category}</h4>
@@ -435,8 +467,8 @@ export function PortfolioClientLayout({
 
             {/* Projects Section */}
             <AnimatedSection>
-                <section ref={setRef('projects')} id="projects" className="mb-16 scroll-mt-24 md:mb-24 lg:mb-36">
-                    <h2 className="mb-8 flex items-center font-headline text-xl font-semibold text-slate-200 sm:text-2xl">
+                <section ref={setRef('projects')} id="projects" className="mb-12 scroll-mt-24 md:mb-16 lg:mb-20">
+                    <h2 className="sticky top-0 z-30 bg-background/75 backdrop-blur-md -mx-4 sm:-mx-8 px-4 sm:px-8 py-4 mb-1 flex items-center font-headline text-xl font-semibold text-slate-200 sm:text-2xl lg:static lg:bg-transparent lg:backdrop-blur-none lg:mx-0 lg:px-0 lg:py-0 lg:mb-8">
                         <span className="mr-2 font-mono text-2xl font-normal text-primary">04.</span>
                         Proyectos
                     </h2>
@@ -449,10 +481,8 @@ export function PortfolioClientLayout({
                             rel="noopener noreferrer"
                             className="group relative grid grid-cols-1 items-center gap-6 md:grid-cols-2 transition-all duration-300 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"
                         >
-                            {/* 2. Hemos añadido el div para el fondo iluminado, igual que en 'Experiencia'. */}
                             <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md bg-primary/10 opacity-0 transition-all duration-300 motion-reduce:transition-none lg:block lg:group-hover:opacity-100 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
                             
-                            {/* Contenido de la Imagen (ahora sin su propio <Link>) */}
                             <div className={cn("relative h-80 w-full", index % 2 === 0 ? 'md:order-2' : '')}>
                             <Image
                                 src={project.images[0]}
@@ -462,11 +492,9 @@ export function PortfolioClientLayout({
                             />
                             </div>
 
-                            {/* Contenido del Texto */}
                             <div className={cn("relative z-10", index % 2 === 0 ? 'md:order-1 md:text-left' : 'md:text-right')}>
                             <p className="font-mono text-sm text-primary">Proyecto Destacado</p>
                             
-                            {/* 3. El título ahora tiene la flecha animada y ya no es un enlace individual. */}
                             <h3 className="mt-2 inline-flex items-baseline font-headline text-2xl font-bold text-slate-200 group-hover:text-primary transition-colors duration-300">
                                 <span>{project.name}</span>
                                 <ArrowUpRight className="ml-2 h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
@@ -476,7 +504,7 @@ export function PortfolioClientLayout({
                                 <p className="text-slate-400">{project.longDescription}</p>
                             </div>
 
-                            <div className={cn("flex flex-wrap gap-2", index % 2 !== 0 && "justify-end")}>
+                            <div className={cn("flex flex-wrap gap-2", index % 2 !== 0 && "md:justify-end")}>
                                 {project.technologies.map(tech => (
                                 <span key={tech} className="rounded-full bg-primary/10 px-3 py-1 font-mono text-sm text-primary">
                                     {tech}
@@ -508,13 +536,16 @@ export function PortfolioClientLayout({
             
             {/* Contact Section */}
             <AnimatedSection>
-                <section ref={setRef('contact')} id="contact" className="mb-16 scroll-mt-24 text-center md:mb-24 lg:mb-36">
-                    <p className="font-mono text-2xl text-primary">05. ¿Qué es lo siguiente?</p>
-                    <h2 className="mt-2 font-headline text-5xl font-bold text-slate-200">Ponte en Contacto</h2>
-                    <p className="mx-auto mt-4 max-w-xl text-balance text-lg text-slate-400">
+                <section ref={setRef('contact')} id="contact" className="mb-12 scroll-mt-24 text-center md:mb-16 lg:mb-20">
+                    <h2 className="top-0 z-30 bg-background/75 backdrop-blur-md -mx-4 sm:-mx-8 px-4 sm:px-8 py-4 flex items-center justify-center font-headline text-xl font-semibold text-slate-200 sm:text-2xl lg:static lg:bg-transparent lg:backdrop-blur-none lg:mx-0 lg:px-0 lg:py-0">
+                        <span className="mr-2 font-mono text-2xl font-normal text-primary">05.</span>
+                        ¿Qué es lo siguiente?
+                    </h2>
+                    <h2 className="top-0 z-30 bg-background/75 backdrop-blur-md py-4 font-headline text-4xl md:text-5xl font-bold text-slate-200">Ponte en Contacto</h2>
+                    <p className="mx-auto mt-4 mb-4 max-w-xl text-balance text-lg text-slate-400">
                         Actualmente estoy abierto a nuevas oportunidades y mi bandeja de entrada está siempre disponible. No te olvides de visitar mis redes sociales y si tienes alguna pregunta o simplemente quieres saludar, ¡ahí estaré para responderte!
                     </p>
-                    <div className="mt-8 flex justify-center">
+                    <div className="mt-12 hidden lg:flex lg:justify-center">
                         <BrutalistContactButton email={profile.contact.email} />
                     </div>
                 </section>
@@ -523,5 +554,6 @@ export function PortfolioClientLayout({
         </main>
         </div>
     </div>
+    </>
     );
 }

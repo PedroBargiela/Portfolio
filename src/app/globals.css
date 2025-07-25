@@ -401,9 +401,9 @@ body.overflow-auto {
 .send-button {
   font-family: inherit;
   font-size: 20px;
-  background: hsl(204, 95%, 37%); /* Usamos tu color primario */
+  background: hsl(var(--primary) / .8); /* Usamos tu color primario */
   color: #fff;
-  padding: 0.7em 1em;
+  padding: 0.5em 1em;
   padding-left: 0.9em;
   display: flex;
   align-items: center;
@@ -555,9 +555,22 @@ body.overflow-auto {
   color: hsl(var(--card-foreground)); /* Color de texto de tu tema */
 }
 
-
-
 .brutalist-button:hover .button-text {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Estilo y animación para la etiqueta "Nuevos" */
+@keyframes golden-glow {
+  0%, 100% {
+    text-shadow: 0 0 5px #fde047, 0 0 10px #fde047;
+  }
+  50% {
+    text-shadow: 0 0 10px #facc15, 0 0 20px #facc15;
+  }
+}
+
+.new-badge {
+  color: #fde047; /* Un color dorado/amarillo brillante */
+  animation: golden-glow 2s ease-in-out infinite;
 }

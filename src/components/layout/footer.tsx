@@ -5,7 +5,7 @@ export default async function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full py-8 text-center text-slate-500 font-mono text-sm">
+    <footer className="w-full py- text-center text-slate-500 font-mono text-sm">
       <p>
         Diseñado y desarrollado por Pedro Bargiela.
       </p>

@@ -6,8 +6,6 @@ import { LeftSocialBar, RightEmailBar } from '@/components/layout/side-bars';
 import { CustomCursor } from '@/components/ui/custom-cursor';
 import { ClientLayout } from '@/components/layout/client-layout';
 
-// La metadata sigue sin ir aquí
-// export const metadata: Metadata = { ... };
 
 export default function RootLayout({
   children,
@@ -24,7 +22,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-body antialiased bg-background text-foreground">
+      <body className="font-body antialiased bg-background text-foreground pb-24 lg:pb-0">
         {/* Renderiza CustomCursor solo si showCustomCursor es true */}
         { <CustomCursor />}
 
