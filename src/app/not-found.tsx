@@ -13,7 +13,7 @@ export default function NotFound() {
         <p className="mt-6 text-base leading-7 text-muted-foreground">
           Parece que te has perdido en el código. La página que buscas no existe o ha sido movida a otro universo digital.
         </p>
-        <div className="mt-10 flex items-center justify-center gap-x-6">
+        <div className="mt-10 flex flex-col items-center justify-center gap-y-4 sm:flex-row sm:gap-x-6">
           <Button asChild>
             <Link href="/">
               <ArrowLeft className="mr-2 h-4 w-4" /> Volver al portfolio
