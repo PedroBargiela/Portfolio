@@ -203,8 +203,8 @@ export function PortfolioClientLayout({
             showBackToTop={showBackToTop} 
             onScrollToTop={scrollToTop} 
         />
-        <div className="w-[85%] lg:w-full mx-auto max-w-7xl">
-        <div className="lg:grid lg:grid-cols-2 lg:gap-16">
+        <div className="w-[85%] xl-custom:w-full mx-auto max-w-7xl">
+        <div className="lg:grid lg:grid-cols-2 lg:gap-8">
             
             {/* ================================== */}
             {/* ==      COLUMNA IZQUIERDA (FIJA)      == */}
