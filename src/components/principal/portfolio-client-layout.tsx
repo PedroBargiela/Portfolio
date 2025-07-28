@@ -209,7 +209,7 @@ export function PortfolioClientLayout({
             {/* ================================== */}
             {/* ==      COLUMNA IZQUIERDA (FIJA)      == */}
             {/* ================================== */}
-            <header className="flex flex-col items-center text-center px-0 py-16 sm:px-8 lg:sticky lg:top-0 lg:items-start lg:text-left lg:max-h-screen lg:w-full lg:flex-col lg:justify-between lg:px-0 lg:py-24">
+            <header className="flex flex-col items-center text-center px-0 py-24 sm:px-8 lg:sticky lg:top-0 lg:items-start lg:text-left lg:max-h-screen lg:w-full lg:flex-col lg:justify-between lg:px-0 lg:py-24">
             <div>
                 <h1 className="font-headline text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl">
                 <Link href="/">{profile.name}</Link>
@@ -257,6 +257,13 @@ export function PortfolioClientLayout({
             <div className="mt-10 hidden lg:flex lg:justify-start">
             <SendButton />
             </div>
+
+            <a 
+                href={`mailto:${profile.contact.email}`}
+                className="mt-8 font-mono text-sm text-slate-400 transition-colors hover:text-primary"
+                >
+                {profile.contact.email}
+            </a>
             
             <div className="mt- flex items-center gap-4 text-slate-400">
                 <ul className="mt-8 flex items-center" aria-label="Social media">
@@ -347,7 +354,7 @@ export function PortfolioClientLayout({
                             href={item.companyUrl || '#'}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group relative block transition-all duration-300 sm:grid sm:grid-cols-8 sm:gap-8 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"
+                            className="group relative block transition-all duration-300 sm:grid sm:grid-cols-8 sm:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"
                             >                           
                             <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md bg-primary/10 opacity-0 transition-all duration-300 motion-reduce:transition-none lg:block lg:group-hover:opacity-100 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
                             <header className="z-10 mb-2 mt-1 font-mono text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">
@@ -378,7 +385,7 @@ export function PortfolioClientLayout({
                     href="/CV Pedro Bargiela.pdf" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="group inline-flex items-center font-semibold leading-tight text-slate-200 transition-colors duration-300 hover:text-primary"
+                    className="group inline-flex items-center font-semibold text-xl leading-tight text-slate-200 transition-colors duration-300 hover:text-primary"
                     aria-label="Ver currículum completo (se abre en una nueva pestaña)"
                     >
                         <span>Ver CV Completo</span>

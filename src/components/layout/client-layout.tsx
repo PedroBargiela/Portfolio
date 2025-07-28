@@ -3,12 +3,13 @@
 
 import { useState, useEffect } from 'react';
 import { LauncherPage } from '@/components/homepage/LauncherPage';
+import { useIsDesktop } from '@/hooks/use-is-desktop';
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
     const [showLauncher, setShowLauncher] = useState<boolean | null>(null);
+    const isDesktop = useIsDesktop();
 
     useEffect(() => {
-        // Esta lógica se mantiene igual
         const hasVisited = sessionStorage.getItem('hasVisitedLauncherpage') === 'true';
         setShowLauncher(!hasVisited);
     }, []);
@@ -18,16 +19,13 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
         setShowLauncher(false);
     };
     
-    // Mientras esperamos a saber si mostrar el launcher, no mostramos nada
-    if (showLauncher === null) {
+    if (isDesktop === null) {
         return null; 
     }
 
-    // Ahora la condición es simple: solo depende de si ya se ha visitado o no
-    if (showLauncher) {
+    if (isDesktop && showLauncher) {
         return <LauncherPage onEnterPortfolio={handleEnterPortfolio} />;
     }
 
-    // Si no, muestra el portfolio
     return <>{children}</>;
 }
