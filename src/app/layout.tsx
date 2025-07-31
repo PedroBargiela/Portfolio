@@ -33,9 +33,22 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${firaCode.variable} dark`} suppressHydrationWarning={true}>
       <head>
-        
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Pedro Bargiela",
+            "url": "https://www.pedrobargiela.com",
+            "sameAs": [
+                "https://www.linkedin.com/in/pedrobargielalemos/",
+                "https://github.com/PedroBargiela"
+            ],
+            "jobTitle": "Desarrollador Full Stack | Machine Learning, Data Science & IA"
+        })}}
+      />
       </head>
-      <body className="font-body antialiased bg-background text-foreground pb-24 lg:pb-0">
+      <body className="font-sans antialiased bg-background text-foreground pb-24 lg:pb-0">
         <Analytics measurementId="G-VVPVRSJE4P" />
         {/* Renderiza CustomCursor solo si showCustomCursor es true */}
         { <CustomCursor />}
