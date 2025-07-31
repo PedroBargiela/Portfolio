@@ -12,6 +12,7 @@ import Header from '@/components/layout/header';
 import { LeftSocialBar, RightEmailBar } from '@/components/layout/side-bars';
 import { Analytics } from '@/components/analytics';
 
+
 // Configuración de fuentes optimizada con next/font
 const inter = Inter({ 
   subsets: ['latin'],
