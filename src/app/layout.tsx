@@ -60,10 +60,6 @@ export default function RootLayout({
         <Analytics measurementId="G-VVPVRSJE4P" />
         <CustomCursor />
         
-        {/* Componentes solo para la vista de ESCRITORIO */}
-        {/* Es importante que estos componentes tengan clases como 'hidden lg:block' en su interior */}
-        <Header />
-        
         <div className="flex min-h-screen flex-col">
           <main className="flex-grow">
             {/* ClientLayout gestiona si se muestra la LauncherPage o el contenido */}
