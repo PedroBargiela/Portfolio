@@ -7,7 +7,7 @@ import {
     SiGithub, SiFigma, SiAdobe, SiPandas, SiTensorflow, SiNumpy, SiScikitlearn,
     SiTypescript, SiTailwindcss, SiNodedotjs, SiMongodb, SiDocker, SiPytorch
 } from 'react-icons/si';
-import { FaDatabase, FaQuestionCircle } from 'react-icons/fa';
+import { FaDatabase, FaQuestionCircle, FaLayerGroup } from 'react-icons/fa';
 import { TbSeo } from 'react-icons/tb';
 import { AiOutlineFileSearch } from 'react-icons/ai';
 
@@ -38,6 +38,9 @@ export function TechIcon({ name, className }: { name: string; className?: string
             return <SiPhp className={className} />;
         case 'codeigniter':
             return <SiCodeigniter className={className} />;
+        case 'as400':
+        case 'ibm as400':
+            return <FaLayerGroup className={className} />; // Icono genérico para AS400
         case 'node.js':  
             return <SiNodedotjs className={className} />;
         case 'python':

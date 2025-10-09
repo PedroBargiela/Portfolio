@@ -39,6 +39,16 @@ const profile: Profile = {
 export const experience: Experience[] = [
     {
         id: 'exp1',
+        title: 'Soporte en Aplicaciones IT',
+        company: 'Grupo Nueva Pescanova',
+        companyUrl: 'https://www.nuevapescanova.com/',
+        startDate: 'SEP 2025',
+        endDate: 'ACTUALMENTE',
+        description: 'Monotorización y mantenimiento del sistema AS/400 de IBM en las áreas de logística y producción. Mi labor incluye la administración y consulta de bases de datos mediante SQL en AS/400, así como la participación clave en el desarrollo de proyectos estratégicos de alcance internacional.',
+        technologies: ['AS/400', 'SQL', 'MySQL']
+    },
+    {
+        id: 'exp2',
         title: 'Programador Full Stack',
         company: 'PONTECERCA',
         companyUrl: 'https://www.pontecerca.es/',
@@ -48,7 +58,7 @@ export const experience: Experience[] = [
         technologies: ['PHP', 'CodeIgniter', 'JavaScript', 'CSS', 'WordPress', 'PrestaShop', 'MySQL']
     },
     {
-        id: 'exp2',
+        id: 'exp3',
         title: 'Desarrollador Frontend',
         company: 'INNOVACIÓN ÁGIL',
         companyUrl: 'https://innovacionagil.com/', 
@@ -58,7 +68,7 @@ export const experience: Experience[] = [
         technologies: ['WordPress', 'Elementor', 'PHP', 'MySQL', 'SEO/SEM']
     },
     {
-        id: 'exp3',
+        id: 'exp4',
         title: 'Frontend Developer',
         company: 'TECONSITE SL',
         companyUrl: 'https://www.teconsite.es/',
@@ -106,8 +116,9 @@ export const skills: SkillCategory[] = [
         items: [
             { name: 'PHP' },
             { name: 'CodeIgniter' },
-            { name: 'Node.js' },
+            { name: 'AS/400' },
             { name: 'Python' },
+            { name: 'Node.js' },
             { name: 'MySQL' },
             { name: 'MariaDB' },
             { name: 'MongoDB' },
